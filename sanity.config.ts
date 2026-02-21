@@ -11,6 +11,7 @@ export default defineConfig({
   basePath: '/studio',
   projectId,
   dataset,
+  apiVersion: "2024-01-01",
   title: 'Gabhru in UK Content Studio',
   schema: {
     types: [article, author, category],
