@@ -26,7 +26,7 @@ export const ARTICLE_BY_SLUG_QUERY = groq`
     "authorBio": author->bio,
     "categoryTitles": categories[]->title,
     content,
-    "pdfUrl": pdf.asset->url,
+    pdfLink,
     publishedAt,
     "coverImage": coverImage.asset->url,
     "relatedArticles": *[_type == "article" && _id != ^._id && count(categories[@._ref in ^.^.categories[]._ref]) > 0] | order(publishedAt desc)[0...3] {

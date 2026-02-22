@@ -178,26 +178,38 @@ export default async function ArticlePage({ params }: Props) {
               )}
             </div>
 
-            {/* Document Download Section */}
-            {article.pdfUrl && (
-              <div className="mt-16 bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 rounded-2xl p-8 md:p-10 text-center md:text-left flex flex-col md:flex-row justify-between items-center shadow-sm">
-                <div className="flex flex-col md:flex-row items-center mb-6 md:mb-0 gap-6">
-                  <div className="bg-white p-4 rounded-full shadow-sm text-accent-dark">
-                    <FileText className="w-10 h-10" />
+            {/* Official Document Embed Section */}
+            {article.pdfLink && (
+              <div className="mt-16 bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 rounded-2xl p-8 md:p-10 shadow-sm flex flex-col gap-8">
+                <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+                  <div className="flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-6">
+                    <div className="bg-white p-4 rounded-full shadow-sm text-accent-dark shrink-0">
+                      <FileText className="w-10 h-10" />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-serif font-bold text-gray-900 mb-2">Official Document / Report</h3>
+                      <p className="text-gray-600 max-w-md">Review the full authentic documentation associated with this article below.</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-2xl font-serif font-bold text-gray-900 mb-2">Download Full Report</h3>
-                    <p className="text-gray-600 max-w-md">Access the complete documentation, official policy attachments, or detailed reports associated with this article.</p>
-                  </div>
+                  <a
+                    href={article.pdfLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-accent hover:bg-accent-dark hover:text-white text-primary font-bold py-4 px-8 rounded-lg shadow-md transition-colors flex items-center whitespace-nowrap shrink-0"
+                  >
+                    <Download className="w-5 h-5 mr-3" /> View on Google Drive
+                  </a>
                 </div>
-                <a
-                  href={`${article.pdfUrl}?dl=`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-primary hover:bg-gray-800 text-white font-semibold py-4 px-8 rounded-lg shadow-md transition-colors flex items-center whitespace-nowrap"
-                >
-                  <Download className="w-5 h-5 mr-3" /> Download PDF
-                </a>
+                
+                {/* PDF iFrame Embed */}
+                <div className="w-full h-[400px] md:h-[600px] rounded-xl overflow-hidden border border-gray-200 shadow-inner bg-white">
+                  <iframe 
+                    src={article.pdfLink.replace('/view', '/preview')} 
+                    className="w-full h-full border-0" 
+                    title="Google Drive Document Preview"
+                    allow="autoplay"
+                  />
+                </div>
               </div>
             )}
             
