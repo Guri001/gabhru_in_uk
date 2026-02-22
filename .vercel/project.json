@@ -1,0 +1,16 @@
+{
+  "projectId": "prj_V2e2H9HHfWfFAM9gxbEZRGsCsrFB",
+  "orgId": "team_1DWolT9bHnQwNlXbkbHsAH1J",
+  "projectName": "gabhru-in-uk",
+  "settings": {
+    "createdAt": 1770567060645,
+    "framework": "nextjs",
+    "devCommand": null,
+    "installCommand": null,
+    "buildCommand": null,
+    "outputDirectory": null,
+    "rootDirectory": null,
+    "directoryListing": false,
+    "nodeVersion": "24.x"
+  }
+}
