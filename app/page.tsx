@@ -1,23 +1,38 @@
-import Hero from '@/components/sections/Hero';
-import About from '@/components/sections/About';
-import Services from '@/components/sections/Services';
-import WhyUs from '@/components/sections/WhyUs';
-import SuccessStories from '@/components/sections/SuccessStories';
-import Process from '@/components/sections/Process';
-import ContactForm from '@/components/sections/ContactForm';
-import Footer from '@/components/sections/Footer';
+import Hero from '@/components/home/Hero';
+import AboutSection from '@/components/home/AboutSection';
+import PublicEngagement from '@/components/home/PublicEngagement';
+import MediaCollaborations from '@/components/home/MediaCollaborations';
+import ArticlePreview from '@/components/home/ArticlePreview';
+import ImpactStats from '@/components/home/ImpactStats';
+import GalleryMasonry from '@/components/home/GalleryMasonry';
+import ContactStrip from '@/components/home/ContactStrip';
 
 export default function Home() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Gabhru in UK",
+    "url": "https://gabhruinuk.com",
+    "jobTitle": "Public Figure & Media Personality",
+    "sameAs": [
+      "https://instagram.com/gabhruinuk",
+      "https://youtube.com/gabhruinuk",
+      "https://twitter.com/gabhruinuk",
+      "https://linkedin.com/in/gabhruinuk"
+    ]
+  };
+
   return (
-    <main className="min-h-screen bg-gray-50 text-foreground">
+    <main className="min-h-screen bg-[#0A1128] text-[#FAFAFA] font-sans">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <Hero />
-      <About />
-      <Services />
-      <WhyUs />
-      <SuccessStories />
-      <Process />
-      <ContactForm />
-      <Footer />
+      <AboutSection />
+      <PublicEngagement />
+      <MediaCollaborations />
+      <ArticlePreview />
+      <ImpactStats />
+      <GalleryMasonry />
+      <ContactStrip />
     </main>
   );
 }

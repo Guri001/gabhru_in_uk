@@ -1,21 +1,18 @@
 import type { Metadata } from 'next';
-import { Inter, Poppins, Playfair_Display } from 'next/font/google';
+import { Inter, Playfair_Display } from 'next/font/google';
 import './globals.css';
+import SmoothScroll from '@/components/global/SmoothScroll';
+import CustomCursor from '@/components/global/CustomCursor';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
-const poppins = Poppins({ 
-  weight: ['400', '500', '600', '700'],
-  subsets: ['latin'], 
-  variable: '--font-poppins' 
-});
 const playfair = Playfair_Display({
   subsets: ['latin'],
   variable: '--font-playfair'
 });
 
 export const metadata: Metadata = {
-  title: 'Gabhru in UK - Build Your Career in the UK',
-  description: 'Helping young Indian students build successful careers in the UK.',
+  title: 'Gabhru in UK | Public Figure & Media Personality',
+  description: 'Official portfolio of Gabhru in UK – News & Media covering UK Immigration & Lifestyle.',
 };
 
 export default function RootLayout({
@@ -24,9 +21,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`${inter.variable} ${poppins.variable} ${playfair.variable} font-sans antialiased text-foreground bg-background`}>
-        {children}
+    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+      <body className="bg-[#0A1128] text-[#FAFAFA] font-sans antialiased overflow-x-hidden selection:bg-[#0066FF] selection:text-white">
+        <SmoothScroll>
+          <CustomCursor />
+          {children}
+        </SmoothScroll>
       </body>
     </html>
   );

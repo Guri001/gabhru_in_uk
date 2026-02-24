@@ -3,7 +3,7 @@ import { ARTICLE_BY_SLUG_QUERY } from "@/lib/queries";
 import { PortableText } from "@portabletext/react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, FileText, Calendar, Clock, User, Download, Instagram, Youtube, Twitter, Linkedin } from "lucide-react";
+import { ArrowLeft, Clock, Instagram, Youtube, Twitter, Linkedin, Copy, Share2 } from "lucide-react";
 import ReadingProgress from "./ReadingProgress";
 import { Metadata, ResolvingMetadata } from "next";
 
@@ -13,7 +13,6 @@ type Props = {
   params: { slug: string };
 };
 
-// Generate Dynamic SEO Metadata
 export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
@@ -23,7 +22,6 @@ export async function generateMetadata(
 
   const excerpt = article.excerpt || "Read the latest insights and updates from Gabhru in UK.";
   const title = `${article.title} | Gabhru in UK`;
-  // Use Sanity image URL directly
   const image = article.coverImage || "";
 
   return {
@@ -47,19 +45,14 @@ export async function generateMetadata(
   };
 }
 
-// Portable text components mapping for rich-text styling
 const ptComponents = {
   types: {
     image: ({ value }: any) => {
-      if (!value?.asset?._ref) return null;
-      // Convert sanity image ref to URL (simple hack, better to use @sanity/image-url)
-      // Assuming we just fetch image directly if we had a sanity image builder, 
-      // but without it, we can only render if we mapped it in query.
-      // For now, if value has an asset URL passed, we'll try to render.
+      if (!value?.asset?.url) return null;
       return (
-        <figure className="my-10 w-full">
-          <img src={value.asset.url} alt={value.alt || "Article image"} className="w-full rounded-xl object-cover shadow-sm" />
-          {value.caption && <figcaption className="text-center text-sm text-gray-500 mt-3">{value.caption}</figcaption>}
+        <figure className="my-12 w-full">
+          <img src={value.asset.url} alt={value.alt || "Article image"} className="w-full h-auto object-cover" />
+          {value.caption && <figcaption className="text-center text-sm text-gray-500 mt-4 font-sans">{value.caption}</figcaption>}
         </figure>
       );
     }
@@ -73,11 +66,9 @@ export default async function ArticlePage({ params }: Props) {
     notFound();
   }
 
-  // Calculate estimated reading time
   const wordCount = JSON.stringify(article.content || []).split(/\s+/).length;
   const readingTime = Math.max(1, Math.ceil(wordCount / 200));
 
-  // Generate structured JSON-LD data
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -88,7 +79,7 @@ export default async function ArticlePage({ params }: Props) {
     "datePublished": article.publishedAt,
     "author": [{
       "@type": "Person",
-      "name": article.authorName || "Gabhru in UK",
+      "name": "Gabhru in UK",
       "url": "https://gabhruinuk.com"
     }],
     "publisher": {
@@ -102,192 +93,106 @@ export default async function ArticlePage({ params }: Props) {
   };
 
   return (
-    <article className="min-h-screen bg-gray-50 font-sans pb-24">
-      {/* Schema Injection */}
+    <article className="min-h-screen bg-[#FAFAFA] font-sans pb-32">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-
       <ReadingProgress />
 
-      {/* Cinematic Hero */}
-      <div className="relative w-full h-[60vh] min-h-[500px] flex items-end">
-        <div className="absolute inset-0 z-0">
-          {article.coverImage ? (
-            <img src={article.coverImage} className="w-full h-full object-cover" alt={article.title} />
-          ) : (
-            <div className="w-full h-full bg-primary" />
-          )}
-          {/* Dark gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent" />
+      <div className="container mx-auto px-6 md:px-12 max-w-4xl pt-40 pb-16">
+        <Link href="/articles" className="inline-flex items-center text-gray-500 hover:text-[#0066FF] mb-12 transition-colors text-sm font-medium uppercase tracking-widest">
+          <ArrowLeft className="w-4 h-4 mr-2" /> Back to Insights
+        </Link>
+        
+        <div className="flex flex-wrap gap-3 mb-6">
+          {article.categoryTitles?.map((cat: string) => (
+            <span key={cat} className="text-xs font-bold tracking-widest uppercase text-[#0066FF]">
+              {cat}
+            </span>
+          ))}
         </div>
         
-        <div className="container mx-auto px-4 max-w-4xl relative z-10 pb-16">
-          <Link href="/articles" className="inline-flex items-center text-white/80 hover:text-white mb-8 transition-colors text-sm font-medium uppercase tracking-widest">
-            <ArrowLeft className="w-4 h-4 mr-2" /> Back to Insights
-          </Link>
-          <div className="flex flex-wrap gap-2 mb-6">
-            {article.categoryTitles?.map((cat: string) => (
-              <span key={cat} className="text-xs font-bold tracking-widest uppercase text-white bg-accent-dark/90 px-3 py-1 rounded-sm shadow-lg">
-                {cat}
-              </span>
-            ))}
-          </div>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white leading-tight mb-8 drop-shadow-lg">
-            {article.title}
-          </h1>
-        </div>
-      </div>
+        <h1 className="text-4xl md:text-5xl lg:text-7xl font-serif font-medium text-[#0A1128] leading-[1.1] mb-8 tracking-tight">
+          {article.title}
+        </h1>
 
-      <div className="container mx-auto px-4 max-w-7xl -mt-8 relative z-20">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          
-          {/* Main Content Column */}
-          <div className="lg:col-span-8 bg-white p-8 md:p-12 xl:p-16 rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100">
-            {/* Metadata Bar */}
-            <div className="flex flex-wrap items-center gap-6 pb-8 mb-10 border-b border-gray-100 text-sm text-gray-500">
-              <div className="flex items-center gap-3">
-                {article.authorImage ? (
-                  <img src={article.authorImage} alt={article.authorName} className="w-10 h-10 rounded-full object-cover border-2 border-gray-50 text-xs flex items-center justify-center font-bold bg-gray-100" />
-                ) : (
-                  <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold">
-                    {article.authorName?.charAt(0) || "G"}
-                  </div>
-                )}
-                <div>
-                  <p className="font-semibold text-gray-900">By {article.authorName || "Gabhru in UK"}</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-4 border-l border-gray-200 pl-6">
+        <div className="flex items-center justify-between border-y border-gray-200 py-6 mb-12">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-full bg-[#0A1128] flex items-center justify-center text-white font-bold">
+              G
+            </div>
+            <div>
+              <p className="font-semibold text-[#121212] leading-none mb-1">Gabhru in UK</p>
+              <div className="flex items-center gap-3 text-sm text-gray-500">
+                <span>{article.publishedAt ? new Date(article.publishedAt).toLocaleDateString("en-UK", { month: "long", day: "numeric", year: "numeric" }) : "Recently"}</span>
+                <span className="w-1 h-1 rounded-full bg-gray-300" />
                 <span className="flex items-center">
-                  <Calendar className="w-4 h-4 mr-2 text-gray-400" />
-                  {article.publishedAt ? new Date(article.publishedAt).toLocaleDateString("en-UK", { month: "long", day: "numeric", year: "numeric" }) : "Recently"}
-                </span>
-                <span className="flex items-center">
-                  <Clock className="w-4 h-4 mr-2 text-gray-400" />
+                  <Clock className="w-3.5 h-3.5 mr-1.5" />
                   {readingTime} min read
                 </span>
               </div>
             </div>
-
-            {/* Editorial Content */}
-            <div className="prose prose-lg md:prose-xl max-w-none text-gray-700 font-sans prose-headings:font-serif prose-headings:font-bold prose-headings:text-gray-900 prose-a:text-accent-dark prose-blockquote:border-accent-dark prose-blockquote:bg-gray-50 prose-blockquote:py-2 prose-blockquote:px-6 prose-blockquote:rounded-r-lg prose-img:rounded-xl">
-              {article.content ? (
-                <PortableText value={article.content} components={ptComponents} />
-              ) : (
-                <p className="italic text-gray-400 py-8">No content provided.</p>
-              )}
-            </div>
-
-            {/* Official Document Embed Section */}
-            {article.pdfLink && (
-              <div className="mt-16 bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 rounded-2xl p-8 md:p-10 shadow-sm flex flex-col gap-8">
-                <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-                  <div className="flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-6">
-                    <div className="bg-white p-4 rounded-full shadow-sm text-accent-dark shrink-0">
-                      <FileText className="w-10 h-10" />
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-serif font-bold text-gray-900 mb-2">Official Document / Report</h3>
-                      <p className="text-gray-600 max-w-md">Review the full authentic documentation associated with this article below.</p>
-                    </div>
-                  </div>
-                  <a
-                    href={article.pdfLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-accent hover:bg-accent-dark hover:text-white text-primary font-bold py-4 px-8 rounded-lg shadow-md transition-colors flex items-center whitespace-nowrap shrink-0"
-                  >
-                    <Download className="w-5 h-5 mr-3" /> View on Google Drive
-                  </a>
-                </div>
-                
-                {/* PDF iFrame Embed */}
-                <div className="w-full h-[400px] md:h-[600px] rounded-xl overflow-hidden border border-gray-200 shadow-inner bg-white">
-                  <iframe 
-                    src={article.pdfLink.replace('/view', '/preview')} 
-                    className="w-full h-full border-0" 
-                    title="Google Drive Document Preview"
-                    allow="autoplay"
-                  />
-                </div>
-              </div>
-            )}
-            
-            {/* Author Card */}
-            <div className="mt-16 pt-12 border-t border-gray-100 flex flex-col sm:flex-row gap-8 items-start">
-              {article.authorImage ? (
-                 <img src={article.authorImage} alt={article.authorName} className="w-24 h-24 rounded-full object-cover shadow-md" />
-              ) : (
-                 <div className="w-24 h-24 rounded-full bg-primary flex items-center justify-center text-white text-3xl font-bold shadow-md">
-                   {article.authorName?.charAt(0) || "G"}
-                 </div>
-              )}
-              <div>
-                <h4 className="text-sm font-bold tracking-widest uppercase text-gray-400 mb-1">Written By</h4>
-                <h3 className="text-3xl font-serif font-bold text-gray-900 mb-3">{article.authorName || "Gabhru in UK"}</h3>
-                <p className="text-gray-600 mb-6 max-w-lg leading-relaxed">
-                  {article.authorBio || "A recognized media personality and trusted voice on UK Immigration & Lifestyle. Guiding individuals with authentic insights and real-world impact."}
-                </p>
-                <div className="flex gap-4">
-                  <a href="#" aria-label="Instagram" className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-accent hover:text-white transition-colors"><Instagram className="w-5 h-5"/></a>
-                  <a href="#" aria-label="YouTube" className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-accent-dark hover:text-white transition-colors"><Youtube className="w-5 h-5"/></a>
-                  <a href="#" aria-label="X (Twitter)" className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-900 hover:text-white transition-colors"><Twitter className="w-5 h-5"/></a>
-                  <a href="#" aria-label="LinkedIn" className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-blue-600 hover:text-white transition-colors"><Linkedin className="w-5 h-5"/></a>
-                </div>
-              </div>
-            </div>
           </div>
-
-          {/* Sidebar / Related Articles */}
-          <div className="lg:col-span-4 space-y-8">
-            <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 sticky top-8">
-              <h3 className="text-2xl font-serif font-bold text-gray-900 mb-6 border-b border-gray-100 pb-4">Related Topics</h3>
-              
-              {article.relatedArticles && article.relatedArticles.length > 0 ? (
-                <div className="flex flex-col gap-6">
-                  {article.relatedArticles.map((rel: any) => (
-                    <Link href={`/articles/${rel.slug}`} key={rel._id} className="group flex gap-4 items-center">
-                      <div className="w-24 h-24 flex-shrink-0 bg-gray-100 rounded-lg overflow-hidden relative">
-                        {rel.coverImage && (
-                          <img src={rel.coverImage} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt={rel.title} />
-                        )}
-                        <div className="absolute inset-0 bg-primary/20 group-hover:bg-transparent transition-colors" />
-                      </div>
-                      <div className="flex flex-col">
-                        {rel.categoryTitles?.slice(0, 1).map((cat: string) => (
-                          <span key={cat} className="text-[10px] font-bold tracking-widest uppercase text-accent-dark mb-1">{cat}</span>
-                        ))}
-                        <h4 className="font-serif font-semibold text-gray-900 group-hover:text-accent-dark transition-colors line-clamp-2 leading-snug">
-                          {rel.title}
-                        </h4>
-                        <span className="text-xs text-gray-500 mt-2">
-                          {rel.publishedAt ? new Date(rel.publishedAt).toLocaleDateString("en-UK", { month: "short", day: "numeric", year: "numeric" }) : ""}
-                        </span>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-gray-500 text-sm">No related articles in this category.</p>
-              )}
-            </div>
-            
-            {/* Newsletter CTA */}
-            <div className="bg-primary text-white p-8 rounded-2xl shadow-sm text-center relative overflow-hidden">
-               <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]" />
-               <div className="relative z-10">
-                 <h3 className="text-2xl font-serif font-bold mb-3">Stay Updated</h3>
-                 <p className="text-gray-300 text-sm mb-6 leading-relaxed">Join thousands of others getting the latest UK Immigration & Lifestyle updates.</p>
-                 <input type="email" placeholder="Your email address" className="w-full px-4 py-3 rounded-lg text-gray-900 mb-3 focus:outline-none focus:ring-2 focus:ring-accent" />
-                 <button className="w-full bg-accent hover:bg-accent-dark hover:text-white transition-colors text-primary font-bold py-3 rounded-lg">
-                   Subscribe Now
-                 </button>
-               </div>
-            </div>
+          
+          <div className="flex items-center gap-3">
+            <button className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-[#0066FF] hover:text-white hover:border-[#0066FF] transition-all hover:scale-110 active:scale-95"><Twitter className="w-4 h-4"/></button>
+            <button className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-[#0066FF] hover:text-white hover:border-[#0066FF] transition-all hover:scale-110 active:scale-95"><Linkedin className="w-4 h-4"/></button>
+            <button className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-[#0066FF] hover:text-white hover:border-[#0066FF] transition-all hover:scale-110 active:scale-95"><Copy className="w-4 h-4"/></button>
           </div>
-
         </div>
+
+        {article.coverImage && (
+          <figure className="w-full mb-16 relative aspect-[21/9] bg-gray-100 overflow-hidden">
+            <img src={article.coverImage} className="w-full h-full object-cover" alt={article.title} />
+          </figure>
+        )}
+
+        {/* Editorial Content */}
+        <div className="prose prose-lg md:prose-xl max-w-none text-gray-800 font-serif leading-relaxed prose-headings:font-serif prose-headings:font-medium prose-headings:text-[#0A1128] prose-a:text-[#0066FF] prose-a:no-underline hover:prose-a:underline prose-p:mb-8 prose-blockquote:border-[#0066FF] prose-blockquote:bg-gray-50/50 prose-blockquote:py-4 prose-blockquote:px-8 prose-blockquote:text-gray-700 prose-blockquote:not-italic">
+          {article.content ? (
+            <PortableText value={article.content} components={ptComponents} />
+          ) : (
+            <p className="italic text-gray-400 py-8">No content provided.</p>
+          )}
+        </div>
+
+        {/* Author Footer */}
+        <div className="mt-24 pt-12 border-t border-gray-200 flex flex-col sm:flex-row gap-8 items-start bg-white p-8 shadow-sm">
+          <div className="w-24 h-24 rounded-full bg-[#0A1128] flex items-center justify-center text-white text-3xl font-bold flex-shrink-0">
+            G
+          </div>
+          <div>
+            <h4 className="text-xs font-bold tracking-widest uppercase text-gray-400 mb-2">Editor</h4>
+            <h3 className="text-2xl font-serif font-medium text-[#0A1128] mb-3">Gabhru in UK</h3>
+            <p className="text-gray-600 mb-6 leading-relaxed font-sans text-sm md:text-base">
+              A recognized media personality and trusted voice on UK Immigration & Lifestyle. Guiding individuals with authentic insights and real-world impact.
+            </p>
+          </div>
+        </div>
+        
       </div>
+
+      {/* Related Articles */}
+      {article.relatedArticles && article.relatedArticles.length > 0 && (
+        <div className="container mx-auto px-6 md:px-12 max-w-7xl pt-24 border-t border-gray-200 mt-12">
+          <h3 className="text-3xl font-serif font-medium text-[#0A1128] mb-12">Related Reading</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            {article.relatedArticles.map((rel: any) => (
+              <Link href={`/articles/${rel.slug}`} key={rel._id} className="group flex flex-col">
+                <div className="relative aspect-[4/3] w-full overflow-hidden mb-6 bg-gray-100">
+                  {rel.coverImage && (
+                    <img src={rel.coverImage} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt={rel.title} />
+                  )}
+                </div>
+                {rel.categoryTitles?.slice(0, 1).map((cat: string) => (
+                  <span key={cat} className="text-[10px] font-bold tracking-widest uppercase text-[#0066FF] mb-3">{cat}</span>
+                ))}
+                <h4 className="text-2xl font-serif leading-snug text-[#0A1128] group-hover:text-[#0066FF] transition-colors mb-3">
+                  {rel.title}
+                </h4>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
     </article>
   );
 }

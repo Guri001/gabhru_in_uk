@@ -11,34 +11,47 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        primary: "#0B1C2D",
-        accent: "#C9A84C", // Gold accent for premium media feel
-        "accent-dark": "#B5132A" // Deep red alternative
+        primary: "#121212",
+        accent: "#0066FF",
+      },
+      keyframes: {
+        scaleIn: {
+          '0%': { transform: 'scale(1)' },
+          '100%': { transform: 'scale(1.08)' },
+        },
+        marquee: {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-100%)' },
+        }
+      },
+      animation: {
+        scaleIn: 'scaleIn 8s ease-out forwards',
+        marquee: 'marquee 25s linear infinite',
       },
       fontFamily: {
         sans: ["var(--font-inter)", "sans-serif"],
-        poppins: ["var(--font-poppins)", "sans-serif"],
         serif: ["var(--font-playfair)", "serif"],
       },
       typography: (theme: any) => ({
         DEFAULT: {
           css: {
-            color: theme("colors.gray.800"),
+            color: theme("colors.gray.200"),
             a: {
-              color: theme("colors.accent-dark"),
+              color: theme("colors.accent"),
               "&:hover": {
-                color: theme("colors.accent"),
+                color: theme("colors.blue.400"),
               },
             },
-            h1: { fontFamily: theme("fontFamily.serif")[0] },
-            h2: { fontFamily: theme("fontFamily.serif")[0] },
-            h3: { fontFamily: theme("fontFamily.serif")[0] },
-            h4: { fontFamily: theme("fontFamily.serif")[0] },
+            h1: { fontFamily: theme("fontFamily.serif")[0], color: theme("colors.white") },
+            h2: { fontFamily: theme("fontFamily.serif")[0], color: theme("colors.white") },
+            h3: { fontFamily: theme("fontFamily.serif")[0], color: theme("colors.white") },
+            h4: { fontFamily: theme("fontFamily.serif")[0], color: theme("colors.white") },
             blockquote: {
               borderLeftColor: theme("colors.accent"),
               fontStyle: "italic",
-              color: theme("colors.gray.600"),
+              color: theme("colors.gray.400"),
             },
+            strong: { color: theme("colors.white") },
           },
         },
       }),
