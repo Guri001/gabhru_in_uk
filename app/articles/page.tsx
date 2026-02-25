@@ -1,46 +1,40 @@
+import { groq } from "next-sanity";
 import { client } from "@/lib/sanity";
-import { ARTICLES_QUERY } from "@/lib/queries";
-import ArticlesClient from "./ArticlesClient";
-import { Metadata } from "next";
+import ArticleListClient from "@/components/articles/ArticleListClient";
 
-export const metadata: Metadata = {
-  title: "Insights & Articles | Gabhru in UK",
-  description: "Official log of articles and insights by Gabhru in UK.",
-};
-
+// Force dynamic or revalidate to ensure fresh content
 export const revalidate = 60;
 
-export default async function ArticlesPage() {
-  const articles = await client.fetch(ARTICLES_QUERY);
+const ALL_ARTICLES_QUERY = groq`
+  *[_type == "article"] | order(publishedAt desc) {
+    _id,
+    title,
+    "slug": slug.current,
+    "categoryTitles": categories[]->title,
+    excerpt,
+    publishedAt,
+    "coverImage": coverImage.asset->url,
+    "estimatedReadTime": round(length(pt::text(content)) / 5 / 150)
+  }
+`;
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Blog",
-    "name": "Insights & Articles | Gabhru in UK",
-    "url": "https://gabhruinuk.com/articles",
-    "description": "Explorations of policy, culture, and the UK diaspora experience.",
-    "publisher": {
-      "@type": "Organization",
-      "name": "Gabhru in UK"
-    }
-  };
+export default async function ArticlesPage() {
+  const articles = await client.fetch(ALL_ARTICLES_QUERY);
 
   return (
-    <div className="bg-[#FAFAFA] min-h-screen text-[#121212] pb-24">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <div className="pt-40 pb-16 px-6 md:px-12 bg-white border-b border-gray-100 shadow-sm relative z-20">
-        <div className="container mx-auto max-w-7xl">
-          <h1 className="text-5xl md:text-7xl font-serif font-medium mb-6 text-[#0A1128] tracking-tight">
+    <main className="min-h-screen pt-32 pb-24 bg-background">
+      <div className="container mx-auto px-6 max-w-7xl">
+        <header className="mb-16">
+          <h1 className="text-4xl md:text-5xl lg:text-7xl font-serif text-foreground mb-6">
             Insights & Articles
           </h1>
-          <div className="h-[2px] w-24 bg-[#0066FF] mb-8" />
-          <p className="text-xl md:text-2xl text-gray-600 max-w-3xl font-light leading-relaxed">
-            Explorations of policy, culture, and the UK diaspora experience.
+          <p className="text-foreground/70 text-lg md:text-xl font-light max-w-3xl">
+            Trusted analysis, interpreted policy updates, and engaging lifestyle features. Stay informed with our latest publications.
           </p>
-        </div>
+        </header>
+        
+        <ArticleListClient initialArticles={articles} />
       </div>
-
-      <ArticlesClient articles={articles} />
-    </div>
+    </main>
   );
 }

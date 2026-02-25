@@ -1,8 +1,12 @@
 import type { Metadata } from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
 import './globals.css';
-import SmoothScroll from '@/components/global/SmoothScroll';
+import dynamic from 'next/dynamic';
 import CustomCursor from '@/components/global/CustomCursor';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
+
+const SmoothScroll = dynamic(() => import('@/components/providers/SmoothScrollProvider'), { ssr: false });
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const playfair = Playfair_Display({
@@ -22,10 +26,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
-      <body className="bg-[#0A1128] text-[#FAFAFA] font-sans antialiased overflow-x-hidden selection:bg-[#0066FF] selection:text-white">
+      <body className="bg-background text-foreground font-sans antialiased overflow-x-hidden">
         <SmoothScroll>
+          <div className="bg-noise" />
           <CustomCursor />
+          <Navbar />
           {children}
+          <Footer />
         </SmoothScroll>
       </body>
     </html>

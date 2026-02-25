@@ -1,69 +1,82 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
 export default function CustomCursor() {
-  const cursorRef = useRef<HTMLDivElement>(null);
+  const outerRef = useRef<HTMLDivElement>(null);
+  const innerRef = useRef<HTMLDivElement>(null);
+  const [isHoveringImage, setIsHoveringImage] = useState(false);
 
   useEffect(() => {
-    // Only render on desktop (pointer: fine)
+    // Only run on non-touch devices
     if (window.matchMedia("(pointer: coarse)").matches) return;
-    
-    const cursor = cursorRef.current;
-    if (!cursor) return;
 
-    // quickTo is optimized for performance mapped to pointer movement
-    const xTo = gsap.quickTo(cursor, "x", { duration: 0.15, ease: "power3" });
-    const yTo = gsap.quickTo(cursor, "y", { duration: 0.15, ease: "power3" });
+    const outer = outerRef.current;
+    const inner = innerRef.current;
+    if (!outer || !inner) return;
+
+    // Inner dot - follows exactly without lag
+    const xToInner = gsap.quickTo(inner, "x", { duration: 0, ease: "none" });
+    const yToInner = gsap.quickTo(inner, "y", { duration: 0, ease: "none" });
+
+    // Outer ring - follows with lerp (lag)
+    const xToOuter = gsap.quickTo(outer, "x", { duration: 0.8, ease: "power3.out" }); // Simulating lerp: 0.12 mapped to duration
+    const yToOuter = gsap.quickTo(outer, "y", { duration: 0.8, ease: "power3.out" });
 
     const handleMouseMove = (e: MouseEvent) => {
-      xTo(e.clientX - 8);
-      yTo(e.clientY - 8);
+      xToInner(e.clientX);
+      yToInner(e.clientY);
+      xToOuter(e.clientX);
+      yToOuter(e.clientY);
+    };
+
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      
+      const isImg = target.tagName.toLowerCase() === "img";
+      const isLink = target.closest("a, button, .magnetic-target");
+
+      if (isImg) {
+        setIsHoveringImage(true);
+        gsap.to(outer, { width: 64, height: 64, backgroundColor: "rgba(201, 168, 76, 0.9)", borderColor: "transparent", duration: 0.3 });
+        gsap.to(inner, { opacity: 0, duration: 0.2 });
+      } else if (isLink) {
+        setIsHoveringImage(false);
+        gsap.to(outer, { width: 56, height: 56, backgroundColor: "rgba(201, 168, 76, 0.2)", borderColor: "#C9A84C", duration: 0.3 });
+        gsap.to(inner, { scale: 0, duration: 0.2 });
+      } else {
+        setIsHoveringImage(false);
+        gsap.to(outer, { width: 36, height: 36, backgroundColor: "transparent", borderColor: "#C9A84C", duration: 0.3 });
+        gsap.to(inner, { opacity: 1, scale: 1, duration: 0.2 });
+      }
     };
 
     window.addEventListener("mousemove", handleMouseMove);
-
-    // Hover effect logic
-    const handleMouseOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      const isHoverable = target.closest("a, button, img, .magnetic-target");
-      if (isHoverable) {
-        gsap.to(cursor, { scale: 2.5, backgroundColor: "#0066FF", duration: 0.2 });
-      } else {
-        gsap.to(cursor, { scale: 1, backgroundColor: "#FAFAFA", duration: 0.2 });
-      }
-    };
-
-    window.addEventListener("mouseover", handleMouseOver);
-    // mouseout should also just pass through to re-evaluate hover state 
-    // we can reuse the handleMouseOver for mouseout, since it checks e.target
-    // Wait, on mouseout, e.target is the element we're leaving.
-    // Let's use mouseout to handle resetting.
-    const handleMouseOut = (e: MouseEvent) => {
-      // Actually mouseover/mouseout can be simplified by relying on window pointer events
-      // or we can just reset if leaving an anchor.
-      const target = e.target as HTMLElement;
-      const isHoverable = target.closest("a, button, img, .magnetic-target");
-      if (isHoverable) {
-        gsap.to(cursor, { scale: 1, backgroundColor: "#FAFAFA", duration: 0.2 });
-      }
-    };
-
-    window.addEventListener("mouseout", handleMouseOut);
+    document.addEventListener("mouseover", handleMouseOver);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseover", handleMouseOver);
-      window.removeEventListener("mouseout", handleMouseOut);
+      document.removeEventListener("mouseover", handleMouseOver);
     };
   }, []);
 
   return (
-    <div
-      ref={cursorRef}
-      className="fixed top-0 left-0 w-4 h-4 rounded-full bg-white mix-blend-difference pointer-events-none z-[9999] max-md:hidden"
-      style={{ transform: "translate(-50%, -50%)" }}
-    />
+    <>
+      <div
+        ref={outerRef}
+        className="fixed top-0 left-0 w-[36px] h-[36px] rounded-full border border-accent flex items-center justify-center pointer-events-none z-[9999] max-md:hidden -translate-x-1/2 -translate-y-1/2"
+      >
+        {isHoveringImage && (
+          <span className="text-background text-[10px] font-bold tracking-widest uppercase">
+            View
+          </span>
+        )}
+      </div>
+      <div
+        ref={innerRef}
+        className="fixed top-0 left-0 w-[6px] h-[6px] rounded-full bg-accent pointer-events-none z-[9999] max-md:hidden -translate-x-1/2 -translate-y-1/2"
+      />
+    </>
   );
 }

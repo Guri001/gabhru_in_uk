@@ -3,26 +3,49 @@
 @tailwind utilities;
 
 :root {
-  --background: #0a1128;
-  --foreground: #fafafa;
+  --background: #0A0A0A;
+  --foreground: #F5F5F0;
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
+  overflow-x: hidden;
+  /* Next.js fonts defined in layout.tsx will handle font-family */
+}
+
+/* Typography Overrides */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-playfair), serif;
+  font-weight: 400; /* Editorial style, not too bold */
 }
 
 /* Custom Selection */
 ::selection {
-  background: #0066ff;
-  color: #ffffff;
+  background: rgba(201, 168, 76, 0.3);
+  color: #F5F5F0;
 }
 ::-moz-selection {
-  background: #0066ff;
-  color: #ffffff;
+  background: rgba(201, 168, 76, 0.3);
+  color: #F5F5F0;
 }
 
-/* Lenis */
+/* Custom Scrollbar for non-lenis browsers/fallbacks */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: #16191F;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(201, 168, 76, 0.5);
+}
+
+/* Lenis Recommended CSS */
 html.lenis,
 html.lenis body {
   height: auto;
@@ -42,4 +65,21 @@ html.lenis body {
 
 .lenis.lenis-smooth iframe {
   pointer-events: none;
+}
+
+/* Grain texture overlay */
+.bg-noise {
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  width: 200%;
+  height: 200vh;
+  background: transparent url('https://upload.wikimedia.org/wikipedia/commons/7/76/1k_Dissolve_Noise_Texture.png') repeat 0 0;
+  background-repeat: repeat;
+  animation: grain 8s steps(10) infinite;
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 100;
 }

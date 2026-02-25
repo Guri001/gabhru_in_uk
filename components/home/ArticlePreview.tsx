@@ -1,78 +1,140 @@
-import { client } from "@/lib/sanity";
-import { groq } from "next-sanity";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
+import { groq } from "next-sanity";
+import { client } from "@/lib/sanity";
 import { format } from "date-fns";
 import MagneticButton from "@/components/ui/MagneticButton";
 
 const LATEST_ARTICLES_QUERY = groq`
-  *[_type == "article" && defined(slug.current)] | order(publishedAt desc)[0...3] {
+  *[_type == "article"] | order(publishedAt desc)[0...3] {
     _id,
     title,
     "slug": slug.current,
     "categoryTitles": categories[]->title,
-    excerpt,
     publishedAt,
-    "coverImage": coverImage.asset->url
+    "coverImage": coverImage.asset->url,
+    "estimatedReadTime": round(length(pt::text(content)) / 5 / 150)
   }
 `;
 
+type ArticleLite = {
+  _id: string;
+  title: string;
+  slug: string;
+  categoryTitles: string[] | null;
+  publishedAt: string;
+  coverImage: string | null;
+  estimatedReadTime: number;
+};
+
 export default async function ArticlePreview() {
-  const articles = await client.fetch(LATEST_ARTICLES_QUERY, {}, { next: { revalidate: 60 } });
+  const articles: ArticleLite[] = await client.fetch(LATEST_ARTICLES_QUERY, {}, { next: { revalidate: 60 } });
+
+  if (!articles || articles.length === 0) return null;
+
+  const featured = articles[0];
+  const sideArticles = articles.slice(1, 3);
 
   return (
-    <section className="py-24 md:py-32 bg-white text-[#121212]">
-      <div className="container mx-auto px-6 md:px-12">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+    <section className="w-full py-24 md:py-32 bg-background relative z-10">
+      <div className="container mx-auto px-6 max-w-7xl">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-16 md:mb-20">
           <div>
-            <h2 className="text-4xl md:text-5xl font-serif mb-4">Latest Insights</h2>
-            <div className="h-[2px] w-16 bg-[#0066FF]" />
+            <span className="text-accent text-[11px] font-bold tracking-[0.2em] uppercase mb-4 block">
+              Thought Leadership
+            </span>
+            <h2 className="text-3xl md:text-5xl font-serif text-foreground mb-4">
+              Insights & Articles
+            </h2>
+            <p className="text-foreground/70 text-lg max-w-xl font-light">
+              Clear, factual analysis of current policies, immigration changes, and community impact.
+            </p>
           </div>
-          <MagneticButton>
-            <Link href="/articles" className="inline-flex items-center gap-2 group text-[#0066FF] font-medium uppercase tracking-widest text-sm">
-              View All Insights 
-              <span className="block transform group-hover:translate-x-2 transition-transform duration-300">→</span>
-            </Link>
-          </MagneticButton>
+          <div className="mt-8 md:mt-0 pb-2">
+            <MagneticButton>
+              <Link
+                href="/articles"
+                className="px-6 py-3 border border-accent text-accent hover:bg-accent hover:text-background transition-colors text-xs font-bold tracking-[0.2em] uppercase inline-block"
+              >
+                View All Insights &rarr;
+              </Link>
+            </MagneticButton>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-          {articles.map((article: any) => (
-            <Link href={`/articles/${article.slug}`} key={article._id} className="group flex flex-col h-full">
-              <div className="relative aspect-[4/3] w-full overflow-hidden mb-6 bg-gray-100">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+          {/* Featured Large Card */}
+          <Link 
+            href={`/articles/${featured.slug}`} 
+            className="group lg:col-span-7 relative h-[500px] lg:h-[700px] block overflow-hidden bg-background-card"
+          >
+            {featured.coverImage && (
+              <Image 
+                src={featured.coverImage} 
+                alt={featured.title} 
+                fill 
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+                sizes="(max-width: 1024px) 100vw, 60vw"
+              />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/40 to-transparent" />
+            
+            <div className="absolute inset-0 p-8 md:p-12 flex flex-col justify-end">
+              <div>
+                <span className="inline-block bg-accent text-background text-xs font-bold tracking-wider uppercase px-3 py-1 mb-4">
+                  {featured.categoryTitles?.[0] || 'Uncategorized'}
+                </span>
+                <h3 className="font-serif text-3xl md:text-4xl text-white leading-tight mb-4 group-hover:text-accent transition-colors duration-300">
+                  {featured.title}
+                  <span className="block w-0 h-[1px] bg-accent mt-4 group-hover:w-16 transition-all duration-500" />
+                </h3>
+                <div className="flex items-center gap-4 text-white/70 text-sm tracking-wider uppercase">
+                  <span>{format(new Date(featured.publishedAt), 'MMM dd, yyyy')}</span>
+                  <span className="w-1 h-1 rounded-full bg-accent" />
+                  <span>{Math.max(1, featured.estimatedReadTime)} MIN READ</span>
+                </div>
+              </div>
+            </div>
+          </Link>
+
+          {/* Right Side Stacked Cards */}
+          <div className="lg:col-span-5 flex flex-col gap-6 lg:gap-8">
+            {sideArticles.map((article) => (
+              <Link 
+                key={article._id} 
+                href={`/articles/${article.slug}`}
+                className="group relative flex-1 h-[350px] lg:h-auto block overflow-hidden bg-background-card"
+              >
                 {article.coverImage && (
-                  <Image
-                    src={article.coverImage}
-                    alt={article.title}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  <Image 
+                    src={article.coverImage} 
+                    alt={article.title} 
+                    fill 
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+                    sizes="(max-width: 1024px) 100vw, 40vw"
                   />
                 )}
-                {article.categoryTitles && article.categoryTitles.length > 0 && (
-                  <div className="absolute top-4 left-4 bg-white px-3 py-1 text-xs font-semibold uppercase tracking-widest text-[#0A1128] shadow-sm">
-                    {article.categoryTitles[0]}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/60 to-transparent" />
+                
+                <div className="absolute inset-0 p-8 flex flex-col justify-end">
+                  <div>
+                    <span className="inline-block border border-accent/40 text-accent bg-background/50 backdrop-blur-md text-xs font-bold tracking-wider uppercase px-3 py-1 mb-3">
+                      {article.categoryTitles?.[0] || 'Uncategorized'}
+                    </span>
+                    <h3 className="font-serif text-2xl text-white leading-snug mb-3 group-hover:text-accent transition-colors duration-300">
+                      {article.title}
+                      <span className="block w-0 h-[1px] bg-accent mt-3 group-hover:w-12 transition-all duration-500" />
+                    </h3>
+                    <div className="flex items-center gap-4 text-white/70 text-xs tracking-wider uppercase">
+                      <span>{format(new Date(article.publishedAt), 'MMM dd, yyyy')}</span>
+                      <span className="w-1 h-1 rounded-full bg-accent" />
+                      <span>{Math.max(1, article.estimatedReadTime)} MIN READ</span>
+                    </div>
                   </div>
-                )}
-              </div>
-              <div className="flex flex-col flex-grow">
-                <div className="flex items-center gap-3 text-sm text-gray-500 mb-3 uppercase tracking-wider font-semibold text-xs">
-                  <time dateTime={article.publishedAt}>
-                    {article.publishedAt ? format(new Date(article.publishedAt), "dd MMM yyyy") : ""}
-                  </time>
-                  <span className="w-1 h-1 rounded-full bg-gray-300" />
-                  <span>5 min read</span>
                 </div>
-                <h3 className="text-2xl font-serif leading-snug mb-3 text-[#121212] group-hover:text-[#0066FF] transition-colors inline-block relative self-start">
-                  {article.title}
-                  <span className="absolute left-0 -bottom-1 w-full h-[1px] bg-[#0066FF] scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300" />
-                </h3>
-                <p className="text-gray-600 font-light line-clamp-2 mt-auto">
-                  {article.excerpt}
-                </p>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </section>

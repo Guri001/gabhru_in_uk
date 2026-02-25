@@ -1,102 +1,173 @@
 "use client";
 
-import { useRef } from "react";
 import Image from "next/image";
-import { motion, useInView } from "framer-motion";
-import { MapPin, CalendarDays } from "lucide-react";
+import { motion } from "framer-motion";
 
-const ENGAGEMENTS = [
+const engagements = [
   {
     id: 1,
-    title: "International Policy Summit",
-    description: "Keynote address on the economic impact of modern immigration policies in the UK.",
-    date: "14 Oct 2023",
+    title: "Parliamentary Address on Immigration Policy",
+    category: "Parliament visits / panel lectures",
+    date: "OCT 2025",
     location: "London, UK",
-    image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=800"
+    description: "Detailed interpretation of the recent changes to the points-based system and its impact on South Asian skilled workers.",
+    image: "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&q=80&w=1200",
+    featured: true, // Spans 2 rows
   },
   {
     id: 2,
-    title: "Community Townhall",
-    description: "Open dialogue with international students discussing post-study work visa transitions.",
-    date: "28 Nov 2023",
-    location: "Manchester, UK",
-    image: "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?auto=format&fit=crop&q=80&w=800"
+    title: "Flood Relief Coordination",
+    category: "Flood relief / humanitarian efforts",
+    date: "SEP 2025",
+    location: "Midlands",
+    description: "Orchestrated community volunteer response during the autumn floods, directing resources to vulnerable households.",
+    image: "https://images.unsplash.com/photo-1593113562656-62ce9b2f211d?auto=format&fit=crop&q=80&w=800",
+    featured: false,
   },
   {
     id: 3,
-    title: "Global Diaspora Forum",
-    description: "Panel discussion mapping the future trajectories of South Asian professionals in Europe.",
-    date: "15 Jan 2024",
-    location: "Birmingham, UK",
-    image: "https://images.unsplash.com/photo-1591115765373-5207764f72e7?auto=format&fit=crop&q=80&w=800"
-  }
+    title: "Annual Community Gathering",
+    category: "Community gatherings",
+    date: "AUG 2025",
+    location: "Birmingham",
+    description: "Cultural preservation and networking event drawing over 500 attendees from across the UK.",
+    image: "https://images.unsplash.com/photo-1511632765486-a01c80cf8cb4?auto=format&fit=crop&q=80&w=800",
+    featured: false,
+  },
+  {
+    id: 4,
+    title: "Meeting with the Mayor",
+    category: "Meetings with notable personalities",
+    date: "JUL 2025",
+    location: "Westminster",
+    description: "Discussions surrounding local council initiatives to better support newly arrived families.",
+    image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&q=80&w=800",
+    featured: false,
+  },
+  {
+    id: 5,
+    title: "Fraud Awareness Campaign",
+    category: "Awareness campaigns",
+    date: "JUN 2025",
+    location: "National (Online)",
+    description: "A nationwide digital campaign exposed fraudulent visa practices, reaching over 100k views within 48 hours.",
+    image: "https://images.unsplash.com/photo-1611095564985-6677498c89b9?auto=format&fit=crop&q=80&w=800",
+    featured: false,
+  },
+  {
+    id: 6,
+    title: "Legal Aid Collaboration",
+    category: "Organisational collaborations",
+    date: "MAY 2025",
+    location: "Manchester",
+    description: "Partnering with respected solicitors to provide free initial consultations to at-risk community members.",
+    image: "https://images.unsplash.com/photo-1450101499163-c8848c66cb85?auto=format&fit=crop&q=80&w=800",
+    featured: false,
+  },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { y: 50, opacity: 0 },
+  visible: { y: 0, opacity: 1, transition: { duration: 0.7, ease: "easeOut" } },
+};
+
 export default function PublicEngagement() {
-  const ref = useRef<HTMLElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.15 }
-    }
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: "easeOut" }
-    }
-  };
-
   return (
-    <section ref={ref} className="w-full py-24 md:py-32 bg-[#0A1128] text-white">
-      <div className="container mx-auto px-6 md:px-12">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.8 }}
-          className="mb-16 md:mb-24"
+    <section id="impact" className="w-full py-24 md:py-32 bg-background relative z-10">
+      <div className="container mx-auto px-6 max-w-7xl">
+        <motion.div
+          initial={{ y: 50, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.7 }}
+          className="mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-serif mb-4">Public Engagement <br /> & Social Impact</h2>
-          <div className="h-[2px] w-16 bg-[#0066FF]" />
+          <span className="text-accent text-[11px] font-bold tracking-[0.2em] uppercase mb-4 block">
+            Real World Impact
+          </span>
+          <h2 className="text-3xl md:text-5xl font-serif text-foreground mb-6">
+            Public Engagement & Social Impact
+          </h2>
+          <p className="text-foreground/70 text-lg max-w-2xl font-light">
+            My work extends beyond digital interpretation, translating directly into tangible community advocacy and on-the-ground support initiatives.
+          </p>
         </motion.div>
 
-        <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[300px]"
           variants={containerVariants}
           initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
         >
-          {ENGAGEMENTS.map((item, index) => (
-            <motion.div 
-              key={item.id} 
-              variants={cardVariants}
-              className={`group overflow-hidden bg-[#121212] flex flex-col ${index === 1 ? 'lg:translate-y-12' : ''}`}
+          {engagements.map((item) => (
+            <motion.div
+              key={item.id}
+              variants={itemVariants}
+              className={`group relative overflow-hidden rounded-sm bg-background-card cursor-pointer ${
+                item.featured ? "md:row-span-2 lg:col-span-2 lg:row-span-2" : "row-span-1 col-span-1"
+              }`}
             >
-              <div className="relative aspect-video w-full overflow-hidden">
+              {/* Image Container mapped to correct sizes and uses transform only for scaling */}
+              <div className="absolute inset-0 w-full h-full overflow-hidden">
                 <Image
                   src={item.image}
-                  alt={item.title}
+                  alt={`Gabhru in UK - ${item.title}`}
                   fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover transform group-hover:scale-[1.06] transition-transform duration-700 ease-out"
+                  sizes={item.featured ? "(max-width: 1024px) 100vw, 66vw" : "(max-width: 768px) 100vw, 33vw"}
                 />
               </div>
-              <div className="p-8 flex flex-col flex-grow">
-                <div className="flex items-center gap-4 text-xs font-medium text-gray-400 mb-4 uppercase tracking-wider">
-                  <span className="flex items-center gap-1"><CalendarDays size={14} /> {item.date}</span>
-                  <span className="flex items-center gap-1"><MapPin size={14} /> {item.location}</span>
+
+              {/* Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/60 to-transparent opacity-80" />
+              
+              {/* Gold Accent Border on Hover */}
+              <div className="absolute inset-x-0 bottom-0 h-[2px] bg-accent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+
+              {/* Content Default - Bottom Aligned */}
+              <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="bg-accent text-background text-xs font-bold tracking-wider uppercase px-2 py-1 rounded-sm">
+                    {item.date}
+                  </span>
+                  <span className="text-foreground/80 text-xs tracking-wider uppercase">
+                    {item.location}
+                  </span>
                 </div>
-                <h3 className="text-xl md:text-2xl font-serif mb-3 group-hover:text-[#0066FF] transition-colors duration-300">{item.title}</h3>
-                <p className="text-gray-300 font-light text-sm md:text-base leading-relaxed">
+                <h3 className={`font-serif text-foreground leading-tight ${item.featured ? "text-2xl md:text-4xl" : "text-xl"}`}>
+                  {item.title}
+                </h3>
+              </div>
+
+              {/* Hover Overlay Description */}
+              <div className="absolute inset-0 bg-background/95 p-6 md:p-8 flex flex-col justify-center transform translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]">
+                <span className="text-accent text-xs tracking-widest uppercase mb-4 block">
+                  {item.category}
+                </span>
+                <p className="text-foreground/90 font-light leading-relaxed text-sm md:text-base mb-6">
                   {item.description}
                 </p>
+                <div className="mt-auto">
+                  <span className="text-xs font-bold uppercase tracking-widest text-accent flex items-center gap-2">
+                    View Details
+                    <span className="block w-4 h-[1px] bg-accent" />
+                  </span>
+                </div>
               </div>
+
+              {/* Subtle lift effect on the card itself */}
+              <div className="absolute inset-0 transition-transform duration-500 group-hover:-translate-y-1 pointer-events-none" />
             </motion.div>
           ))}
         </motion.div>
