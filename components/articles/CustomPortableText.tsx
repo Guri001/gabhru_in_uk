@@ -1,8 +1,4 @@
 import { PortableText, PortableTextComponents } from "@portabletext/react";
-import Image from "next/image";
-import { urlFor } from "@/lib/sanity"; // I need to create this or just use the direct URL if provided. Our query returns direct URLs!
-// Wait, the query returns "coverImage": coverImage.asset->url, so for internal images we need a builder or it might return direct URLs if we mapped it.
-// Let's assume standard PortableText with custom classes for block quotes.
 
 const components: PortableTextComponents = {
   block: {
