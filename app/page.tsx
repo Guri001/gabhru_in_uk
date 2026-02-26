@@ -1,23 +1,21 @@
 import Hero from '@/components/home/Hero';
-import CredentialBar from '@/components/home/CredentialBar';
-import AboutSection from '@/components/home/AboutSection';
-import PublicEngagement from '@/components/home/PublicEngagement';
-import MediaCollaborations from '@/components/home/MediaCollaborations';
-import ArticlePreview from '@/components/home/ArticlePreview';
-import GalleryMasonry from '@/components/home/GalleryMasonry';
-import ContactStrip from '@/components/home/ContactStrip';
+import AboutStrip from '@/components/home/AboutStrip';
+import RealWorldPresence from '@/components/home/RealWorldPresence';
+import AsSeenIn from '@/components/home/AsSeenIn';
+import LatestInsights from '@/components/home/LatestInsights';
+import Gallery from '@/components/home/Gallery';
+import PressContact from '@/components/home/PressContact';
 
 export default function Home() {
   return (
     <main className="min-h-screen">
       <Hero />
-      <CredentialBar />
-      <AboutSection />
-      <PublicEngagement />
-      <MediaCollaborations />
-      <ArticlePreview />
-      <GalleryMasonry />
-      <ContactStrip />
+      <AboutStrip />
+      <RealWorldPresence />
+      <AsSeenIn />
+      <LatestInsights />
+      <Gallery />
+      <PressContact />
     </main>
   );
 }

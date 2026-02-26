@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter, Playfair_Display } from 'next/font/google';
+import { DM_Sans, Playfair_Display } from 'next/font/google';
 import './globals.css';
 import dynamic from 'next/dynamic';
 import CustomCursor from '@/components/global/CustomCursor';
@@ -8,7 +8,7 @@ import Footer from '@/components/layout/Footer';
 
 const SmoothScroll = dynamic(() => import('@/components/providers/SmoothScrollProvider'), { ssr: false });
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-dm-sans' });
 const playfair = Playfair_Display({
   subsets: ['latin'],
   variable: '--font-playfair'
@@ -25,8 +25,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
-      <body className="bg-background text-foreground font-sans antialiased overflow-x-hidden">
+    <html lang="en" className={`${dmSans.variable} ${playfair.variable}`}>
+      <body className="bg-background text-foreground font-sans antialiased overflow-x-hidden selection:bg-accent selection:text-background">
         <SmoothScroll>
           <div className="bg-noise" />
           <CustomCursor />

@@ -96,92 +96,110 @@ export default async function ArticlePage({ params }: Props) {
   };
 
   return (
-    <main className="min-h-screen bg-background relative z-10 pb-20">
+    <main className="min-h-screen bg-background relative z-10 pb-32">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       
       <ArticleClient title={article.title} url={url} />
 
-      {/* Hero Section */}
-      <div className="relative w-full h-[60svh] md:h-[70svh] min-h-[500px]">
-        {article.coverImage && (
-          <Image
-            src={article.coverImage}
-            alt={`Gabhru in UK - ${article.title}`}
-            fill
-            className="object-cover"
-            priority
-            sizes="100vw"
-          />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 md:via-background/50 to-transparent" />
+      {/* Editorial Hero Setup */}
+      <div className="container mx-auto px-6 max-w-[680px] pt-40 pb-16">
         
-        <div className="absolute inset-x-0 bottom-0 p-6 md:p-12 xl:p-16 container mx-auto max-w-7xl flex flex-col justify-end">
-          <div className="max-w-4xl">
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-serif text-white leading-tight mb-8">
-              {article.title}
-            </h1>
-            
-            {/* Author Bar */}
-            <div className="flex flex-wrap items-center gap-4 text-white/80 text-xs md:text-sm tracking-wider uppercase font-medium">
-              <span className="text-accent flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-accent/20 flex items-center justify-center border border-accent/40">G</span>
-                Gabhru in UK
-              </span>
-              <span className="w-1 h-1 rounded-full bg-accent/50" />
-              <span>{format(new Date(article.publishedAt), 'MMM dd, yyyy')}</span>
-              <span className="w-1 h-1 rounded-full bg-accent/50" />
-              <span>{estimatedReadTime} MIN READ</span>
-              {article.categoryTitles && article.categoryTitles.length > 0 && (
-                <>
-                  <span className="w-1 h-1 rounded-full bg-accent/50" />
-                  <span className="border border-accent/40 px-2 py-1 text-[10px] text-accent">{article.categoryTitles[0]}</span>
-                </>
-              )}
+        {/* Category Pill */}
+        {article.categoryTitles && article.categoryTitles.length > 0 && (
+          <span className="inline-block border border-accent/40 text-accent text-[10px] uppercase font-bold tracking-[0.2em] px-3 py-1 mb-6">
+            {article.categoryTitles[0]}
+          </span>
+        )}
+
+        {/* Title */}
+        <h1 className="font-serif text-4xl md:text-5xl lg:text-5xl xl:text-6xl text-foreground leading-[1.1] mb-8">
+          {article.title}
+        </h1>
+
+        {/* Byline */}
+        <div className="flex items-center justify-between border-t border-b border-foreground/10 py-6 mb-12">
+          <div className="flex items-center gap-4">
+            <div className="relative w-12 h-12 rounded-full overflow-hidden border border-accent/20">
+              <Image
+                src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=200&auto=format&fit=crop"
+                alt="Gabhru in UK"
+                fill
+                className="object-cover grayscale-[20%]"
+                sizes="48px"
+              />
             </div>
+            <div className="flex flex-col">
+              <span className="text-foreground font-serif text-lg leading-tight">By Gabhru in UK</span>
+              <span className="text-foreground/50 text-[10px] uppercase tracking-widest font-bold mt-1">Author & Editor</span>
+            </div>
+          </div>
+          <div className="flex flex-col items-end text-right">
+            <span className="text-foreground text-xs uppercase tracking-widest font-bold mb-1">
+              {format(new Date(article.publishedAt), 'MMM dd, yyyy')}
+            </span>
+            <span className="text-accent text-[10px] uppercase tracking-widest font-bold">
+              {estimatedReadTime} MIN READ
+            </span>
           </div>
         </div>
       </div>
 
+      {/* Full Bleed or Contained Image */}
+      {article.coverImage && (
+        <div className="w-full max-w-5xl mx-auto px-6 mb-16">
+          <div className="relative w-full aspect-[16/9] md:aspect-[21/9] overflow-hidden bg-background">
+            <Image
+              src={article.coverImage}
+              alt={`Gabhru in UK - ${article.title}`}
+              fill
+              className="object-cover"
+              priority
+              sizes="100vw"
+            />
+          </div>
+        </div>
+      )}
+
       {/* Article Body */}
-      <article className="container mx-auto px-6 py-16 md:py-24 max-w-7xl relative">
+      <article className="container mx-auto px-6 max-w-7xl relative">
         <CustomPortableText value={article.content} />
       </article>
 
-      {/* Related Articles */}
+      {/* Related Articles - Strict 2 Cards */}
       {article.relatedArticles && article.relatedArticles.length > 0 && (
-        <section className="container mx-auto px-6 max-w-7xl pt-20 border-t border-white/10">
-          <span className="text-accent text-[11px] font-bold tracking-[0.2em] uppercase mb-4 block text-center">
+        <section className="container mx-auto px-6 max-w-[680px] pt-24 mt-24 border-t border-white/10">
+          <span className="text-accent text-[10px] font-bold tracking-[0.3em] uppercase mb-4 block text-center">
             Continue Reading
           </span>
           <h3 className="text-3xl font-serif text-foreground mb-12 text-center">
-            Related Articles
+            Related Insights
           </h3>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {article.relatedArticles.map((related: any) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+            {article.relatedArticles.slice(0, 2).map((related: any) => (
               <Link
                 key={related._id}
                 href={`/articles/${related.slug}`}
-                className="group flex flex-col h-full bg-background-card border border-accent/10 hover:border-accent/30 transition-colors duration-300"
+                className="group flex flex-col h-full bg-background-secondary border border-transparent hover:border-white/5 transition-all duration-300"
               >
-                <div className="relative w-full h-48 overflow-hidden">
+                <div className="relative w-full aspect-[4/3] overflow-hidden">
                   {related.coverImage && (
                     <Image
                       src={related.coverImage}
                       alt={related.title}
                       fill
-                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
-                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-cover transition-transform duration-[1500ms] ease-out group-hover:scale-[1.05]"
+                      sizes="(max-width: 768px) 100vw, 50vw"
                     />
                   )}
                 </div>
                 <div className="p-6 flex flex-col flex-grow">
-                  <h4 className="font-serif text-xl text-foreground leading-snug mb-3 group-hover:text-accent transition-colors duration-300 line-clamp-2">
-                    {related.title}
-                  </h4>
-                  <div className="mt-auto text-foreground/50 text-[10px] tracking-wider uppercase font-bold">
+                  <div className="text-foreground/40 text-[10px] tracking-widest uppercase font-bold mb-3">
                     {format(new Date(related.publishedAt), 'MMM dd, yyyy')}
                   </div>
+                  <h4 className="font-serif text-[1.25rem] text-foreground leading-snug group-hover:text-accent transition-colors duration-300 line-clamp-3">
+                    {related.title}
+                  </h4>
                 </div>
               </Link>
             ))}
