@@ -5,11 +5,12 @@ import { motion } from "framer-motion";
 export default function Template({ children }: { children: React.ReactNode }) {
   return (
     <>
+      {/* Saffron Wipe Out (Exit) / In (Enter) effect */}
       <motion.div
-        className="fixed inset-0 z-[9998] bg-background border-b border-accent pointer-events-none"
-        initial={{ y: "0%" }}
-        animate={{ y: "-100%" }}
-        exit={{ y: "0%" }}
+        className="fixed inset-y-0 right-0 z-[9998] bg-saffron pointer-events-none w-full"
+        initial={{ x: "0%" }}
+        animate={{ x: "-100%" }}
+        exit={{ x: "0%" }}
         transition={{ duration: 0.4, ease: "easeInOut" }}
       />
       {children}

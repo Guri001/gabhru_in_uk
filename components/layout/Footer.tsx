@@ -19,15 +19,13 @@ export default function Footer() {
   };
 
   const navLinks = [
-    { name: "About", path: "/#about" },
-    { name: "Impact", path: "/#impact" },
+    { name: "His Story", path: "/#about" },
     { name: "Media", path: "/#media" },
     { name: "Articles", path: "/articles" },
-    { name: "Press", path: "/#press" },
   ];
 
   return (
-    <footer className="w-full bg-[#0A0A0A] text-foreground relative z-20 pt-20">
+    <footer className="w-full bg-espresso text-cream relative z-20 pt-20">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       
       <div className="container mx-auto px-6 max-w-7xl">
@@ -35,13 +33,12 @@ export default function Footer() {
           
           {/* Left: Brand */}
           <div className="flex-1">
-            <Link href="/" className="inline-block group magnetic-target mb-2">
-              <span className="font-serif text-3xl md:text-4xl text-foreground group-hover:text-accent transition-colors">
-                Gabhru in UK
+            <Link href="/" className="inline-block group magnetic-target mb-2 flex-col">
+              <span className="font-heading font-bold text-3xl md:text-4xl text-cream group-hover:text-saffron transition-colors">
+                Gabhru <span className="text-saffron">in UK</span>
               </span>
-              <span className="inline-block w-1.5 h-1.5 rounded-full bg-accent ml-1 group-hover:scale-150 transition-transform"></span>
             </Link>
-            <p className="text-foreground/50 text-sm tracking-widest uppercase mt-2 max-w-xs">
+            <p className="text-cream/50 text-xs md:text-sm tracking-[0.2em] font-sans uppercase mt-2 max-w-xs">
               Public Figure | News & Media
             </p>
           </div>
@@ -52,7 +49,7 @@ export default function Footer() {
               <Link
                 key={link.name}
                 href={link.path}
-                className="text-xs uppercase tracking-[0.2em] text-foreground/70 hover:text-accent transition-colors magnetic-target py-2"
+                className="text-xs uppercase tracking-[0.2em] font-bold font-sans text-cream/70 hover:text-saffron transition-colors magnetic-target py-2"
               >
                 {link.name}
               </Link>
@@ -62,22 +59,22 @@ export default function Footer() {
           {/* Right: Social Icons */}
           <div className="flex-1 flex md:justify-end gap-4 w-full">
             <MagneticButton>
-              <a href="https://instagram.com" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-accent/20 flex items-center justify-center text-foreground hover:border-accent hover:bg-accent hover:text-background transition-all duration-300">
+              <a href="https://instagram.com" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-saffron/30 flex items-center justify-center text-cream hover:border-saffron hover:bg-saffron hover:text-espresso transition-all duration-300">
                 <FaInstagram size={16} />
               </a>
             </MagneticButton>
             <MagneticButton>
-              <a href="https://youtube.com" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-accent/20 flex items-center justify-center text-foreground hover:border-accent hover:bg-accent hover:text-background transition-all duration-300">
+              <a href="https://youtube.com" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-saffron/30 flex items-center justify-center text-cream hover:border-saffron hover:bg-saffron hover:text-espresso transition-all duration-300">
                 <FaYoutube size={16} />
               </a>
             </MagneticButton>
             <MagneticButton>
-              <a href="https://twitter.com" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-accent/20 flex items-center justify-center text-foreground hover:border-accent hover:bg-accent hover:text-background transition-all duration-300">
+              <a href="https://twitter.com" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-saffron/30 flex items-center justify-center text-cream hover:border-saffron hover:bg-saffron hover:text-espresso transition-all duration-300">
                 <FaXTwitter size={16} />
               </a>
             </MagneticButton>
             <MagneticButton>
-              <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-accent/20 flex items-center justify-center text-foreground hover:border-accent hover:bg-accent hover:text-background transition-all duration-300">
+              <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-saffron/30 flex items-center justify-center text-cream hover:border-saffron hover:bg-saffron hover:text-espresso transition-all duration-300">
                 <FaLinkedinIn size={16} />
               </a>
             </MagneticButton>
@@ -86,9 +83,9 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-accent/20 py-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs tracking-widest uppercase text-foreground/40 text-center md:text-left">
+        <div className="border-t border-saffron/20 py-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] md:text-xs font-sans tracking-[0.2em] font-bold uppercase text-sand/60 text-center md:text-left">
           <p>&copy; {new Date().getFullYear()} Gabhru in UK. All rights reserved.</p>
-          <p>Public Figure | News & Media &ndash; UK Immigration & Lifestyle</p>
+          <p>UK Immigration & Lifestyle</p>
         </div>
       </div>
     </footer>

@@ -3,46 +3,50 @@
 @tailwind utilities;
 
 :root {
-  --background: #0A0A0A;
-  --foreground: #F5F5F0;
+  --cream: #F5EFE6;
+  --espresso: #1C1008;
+  --saffron: #E87D2B;
+  --forest: #2C4A3E;
+  --walnut: #2D1F0E;
+  --sand: #C4A882;
+  --white: #FDFAF7;
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
+  background-color: var(--cream);
+  color: var(--walnut);
   overflow-x: hidden;
-  /* Next.js fonts defined in layout.tsx will handle font-family */
 }
 
 /* Typography Overrides */
 h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-urbanist), sans-serif;
+  color: var(--espresso);
+}
+
+.font-accent {
   font-family: var(--font-playfair), serif;
-  font-weight: 400; /* Editorial style, not too bold */
 }
 
 /* Custom Selection */
 ::selection {
-  background: rgba(201, 168, 76, 0.3);
-  color: #F5F5F0;
-}
-::-moz-selection {
-  background: rgba(201, 168, 76, 0.3);
-  color: #F5F5F0;
+  background: var(--saffron);
+  color: var(--white);
 }
 
-/* Custom Scrollbar for non-lenis browsers/fallbacks */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--background);
+  background: var(--cream);
 }
 ::-webkit-scrollbar-thumb {
-  background: #16191F;
+  background: var(--sand);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(201, 168, 76, 0.5);
+  background: var(--saffron);
 }
 
 /* Lenis Recommended CSS */
@@ -50,36 +54,15 @@ html.lenis,
 html.lenis body {
   height: auto;
 }
-
 .lenis.lenis-smooth {
   scroll-behavior: auto !important;
 }
-
 .lenis.lenis-smooth [data-lenis-prevent] {
   overscroll-behavior: contain;
 }
-
 .lenis.lenis-stopped {
   overflow: hidden;
 }
-
 .lenis.lenis-smooth iframe {
   pointer-events: none;
-}
-
-/* Grain texture overlay */
-.bg-noise {
-  position: fixed;
-  top: -50%;
-  left: -50%;
-  right: -50%;
-  bottom: -50%;
-  width: 200%;
-  height: 200vh;
-  background: transparent url('https://upload.wikimedia.org/wikipedia/commons/7/76/1k_Dissolve_Noise_Texture.png') repeat 0 0;
-  background-repeat: repeat;
-  animation: grain 8s steps(10) infinite;
-  opacity: 0.05;
-  pointer-events: none;
-  z-index: 100;
 }

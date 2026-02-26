@@ -1,96 +1,97 @@
-import Link from "next/link";
 import Image from "next/image";
-import { groq } from "next-sanity";
-import { client } from "@/lib/sanity";
-import { format } from "date-fns";
+import Link from "next/link";
 
-const LATEST_ARTICLES_QUERY = groq`
-  *[_type == "article"] | order(publishedAt desc)[0...3] {
-    _id,
-    title,
-    "slug": slug.current,
-    "categoryTitles": categories[]->title,
-    excerpt,
-    publishedAt,
-    "coverImage": coverImage.asset->url,
-    "estimatedReadTime": round(length(pt::text(content)) / 5 / 150)
-  }
-`;
-
-export default async function LatestInsights() {
-  const articles = await client.fetch(LATEST_ARTICLES_QUERY);
-  
-  if (!articles || articles.length === 0) return null;
-
-  const featured = articles[0];
-  const stacked = articles.slice(1);
-
+export default function LatestInsights() {
   return (
-    <section className="relative w-full py-24 md:py-32 bg-background overflow-hidden border-b border-white/5">
-      <div className="container mx-auto px-6 max-w-7xl">
-        <div className="flex justify-between items-end mb-16">
-          <h2 className="font-serif text-3xl md:text-5xl text-foreground">Insights & Perspectives</h2>
-          <Link href="/articles" className="group flex items-center gap-2 text-accent text-xs font-bold uppercase tracking-[0.2em]">
-            All Insights
-            <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">&rarr;</span>
+    <section className="w-full bg-cream py-24 md:py-32">
+      <div className="container mx-auto px-6 md:px-12 lg:px-20">
+        
+        <div className="flex justify-between items-end mb-16 md:mb-24">
+          <h2 className="font-heading text-4xl md:text-6xl text-walnut font-bold tracking-tight">
+            From the Desk of Gabhru
+          </h2>
+          <Link href="/articles" className="hidden md:inline-flex items-center gap-2 text-saffron font-bold uppercase tracking-widest text-sm hover:text-espresso transition-colors">
+            Read All Insights &rarr;
           </Link>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-8 lg:gap-12">
-          {/* LEFT: Featured (60%) */}
-          <Link href={`/articles/${featured.slug}`} className="group w-full md:w-[60%] flex flex-col">
-            <div className="relative w-full aspect-[4/3] md:aspect-[16/10] overflow-hidden bg-background-secondary mb-6 border border-white/5">
-              {featured.coverImage && (
-                <Image
-                  src={featured.coverImage}
-                  alt={featured.title}
-                  fill
-                  className="object-cover transition-transform duration-[1500ms] ease-out group-hover:scale-[1.03]"
-                  sizes="(max-width: 768px) 100vw, 60vw"
-                />
-              )}
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
+          
+          {/* ONE featured article: large, left-aligned */}
+          <Link href="/articles/navigating-uk-visa-rules-2024" className="w-full lg:w-[60%] group cursor-pointer flex flex-col">
+            <div className="relative w-full aspect-[16/10] overflow-hidden mb-8 shadow-sm">
+              <Image 
+                src="https://images.unsplash.com/photo-1544716278-e513176f20b5?q=80&w=2000&auto=format&fit=crop"
+                alt="Navigating UK Visas"
+                fill
+                sizes="(max-width: 768px) 100vw, 60vw"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+              />
+              <div className="absolute top-4 left-4 bg-saffron text-white px-4 py-1.5 justify-center flex items-center rounded-full text-xs font-bold uppercase tracking-wider shadow-md">
+                Immigration
+              </div>
             </div>
-            <div className="flex flex-col">
-              <span className="text-accent text-[10px] uppercase font-bold tracking-widest mb-3">
-                {featured.categoryTitles?.[0] || 'Uncategorized'}
-              </span>
-              <h3 className="font-serif text-3xl md:text-4xl text-foreground mb-4 group-hover:text-accent transition-colors duration-300 leading-snug">
-                {featured.title}
-              </h3>
-              {featured.excerpt && (
-                <p className="text-foreground/70 font-light text-base md:text-lg line-clamp-2 max-w-2xl leading-relaxed">
-                  {featured.excerpt}
-                </p>
-              )}
-            </div>
+            <h3 className="font-heading text-3xl md:text-5xl text-espresso font-bold mb-5 leading-tight group-hover:underline decoration-saffron decoration-4 underline-offset-8 transition-all">
+              The Reality of Navigating the New UK Visa Rules in 2024
+            </h3>
+            <p className="text-walnut/70 text-lg md:text-xl line-clamp-2 md:leading-relaxed">
+              Breaking down the latest changes and what they actually mean for you, your family, and your future in Britain. No jargon, just facts.
+            </p>
           </Link>
 
-          {/* RIGHT: Stacked (40%) */}
-          <div className="w-full md:w-[40%] flex flex-col gap-10 md:gap-8">
-            {stacked.map((article: any) => (
-              <Link href={`/articles/${article.slug}`} key={article._id} className="group flex flex-col lg:flex-row gap-6">
-                <div className="relative w-full lg:w-40 aspect-video lg:aspect-square overflow-hidden bg-background-secondary shrink-0 border border-white/5">
-                  {article.coverImage && (
-                    <Image
-                      src={article.coverImage}
-                      alt={article.title}
-                      fill
-                      className="object-cover transition-transform duration-[1500ms] ease-out group-hover:scale-[1.05]"
-                      sizes="(max-width: 1024px) 100vw, 160px"
-                    />
-                  )}
+          {/* TWO smaller articles stacked */}
+          <div className="w-full lg:w-[40%] flex flex-col gap-10 md:gap-14 pt-10 lg:pt-0 border-t border-espresso/10 lg:border-t-0 p-0 lg:pl-12 lg:border-l lg:border-espresso/10">
+            
+            {/* Small 1 */}
+            <Link href="/articles/finding-home-in-uk" className="group cursor-pointer flex gap-6 items-start">
+              <div className="relative w-32 h-32 md:w-40 md:h-40 shrink-0 overflow-hidden shadow-sm">
+                <Image 
+                  src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=1000&auto=format&fit=crop"
+                  alt="City life"
+                  fill
+                  sizes="160px"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+                />
+              </div>
+              <div className="flex flex-col justify-center h-full py-2">
+                <div className="border border-saffron/30 text-saffron w-fit px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider mb-4">
+                  Lifestyle
                 </div>
-                <div className="flex flex-col justify-center">
-                  <div className="text-foreground/40 text-[10px] tracking-widest uppercase font-bold mb-3">
-                    {format(new Date(article.publishedAt), 'MMM dd, yyyy')}
-                  </div>
-                  <h4 className="font-serif text-[1.35rem] leading-snug text-foreground group-hover:text-accent transition-colors duration-300">
-                    {article.title}
-                  </h4>
+                <h4 className="font-heading text-xl md:text-2xl text-espresso font-semibold group-hover:underline decoration-saffron decoration-2 underline-offset-4 leading-snug">
+                  Finding Home Far Away from Home
+                </h4>
+              </div>
+            </Link>
+
+            {/* Small 2 */}
+            <Link href="/articles/reclaiming-our-spaces" className="group cursor-pointer flex gap-6 items-start">
+              <div className="relative w-32 h-32 md:w-40 md:h-40 shrink-0 overflow-hidden shadow-sm">
+                <Image 
+                  src="https://images.unsplash.com/photo-1543807535-eceef0bc6599?q=80&w=1000&auto=format&fit=crop"
+                  alt="Community gathering"
+                  fill
+                  sizes="160px"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+                />
+              </div>
+              <div className="flex flex-col justify-center h-full py-2">
+                <div className="border border-saffron/30 text-saffron w-fit px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider mb-4">
+                  Community
                 </div>
-              </Link>
-            ))}
+                <h4 className="font-heading text-xl md:text-2xl text-espresso font-semibold group-hover:underline decoration-saffron decoration-2 underline-offset-4 leading-snug">
+                  Why Reclaiming Our Spaces Matters Now More Than Ever
+                </h4>
+              </div>
+            </Link>
+
           </div>
+
+        </div>
+
+        <div className="mt-16 md:hidden">
+          <Link href="/articles" className="inline-flex items-center gap-2 text-saffron font-bold uppercase tracking-widest text-sm hover:text-espresso transition-colors">
+            Read All Insights &rarr;
+          </Link>
         </div>
       </div>
     </section>

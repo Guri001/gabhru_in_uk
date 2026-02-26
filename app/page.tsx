@@ -1,21 +1,25 @@
 import Hero from '@/components/home/Hero';
-import AboutStrip from '@/components/home/AboutStrip';
-import RealWorldPresence from '@/components/home/RealWorldPresence';
-import AsSeenIn from '@/components/home/AsSeenIn';
+import VibeStrip from '@/components/home/VibeStrip';
+import HisStory from '@/components/home/HisStory';
+import ImpactNumbers from '@/components/home/ImpactNumbers';
+import OutInTheWorld from '@/components/home/OutInTheWorld';
+import MediaAppearances from '@/components/home/MediaAppearances';
 import LatestInsights from '@/components/home/LatestInsights';
-import Gallery from '@/components/home/Gallery';
-import PressContact from '@/components/home/PressContact';
+import HorizontalGallery from '@/components/home/HorizontalGallery';
+import ConnectSection from '@/components/home/ConnectSection';
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-[100svh] w-full overflow-hidden bg-cream">
       <Hero />
-      <AboutStrip />
-      <RealWorldPresence />
-      <AsSeenIn />
+      <VibeStrip />
+      <HisStory />
+      <ImpactNumbers />
+      <OutInTheWorld />
+      <MediaAppearances />
       <LatestInsights />
-      <Gallery />
-      <PressContact />
+      <HorizontalGallery />
+      <ConnectSection />
     </main>
   );
 }

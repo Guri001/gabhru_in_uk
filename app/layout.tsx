@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { DM_Sans, Playfair_Display } from 'next/font/google';
+import { Instrument_Sans, Urbanist, Playfair_Display } from 'next/font/google';
 import './globals.css';
 import dynamic from 'next/dynamic';
 import CustomCursor from '@/components/global/CustomCursor';
@@ -8,11 +8,9 @@ import Footer from '@/components/layout/Footer';
 
 const SmoothScroll = dynamic(() => import('@/components/providers/SmoothScrollProvider'), { ssr: false });
 
-const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-dm-sans' });
-const playfair = Playfair_Display({
-  subsets: ['latin'],
-  variable: '--font-playfair'
-});
+const instrumentSans = Instrument_Sans({ subsets: ['latin'], variable: '--font-instrument' });
+const urbanist = Urbanist({ subsets: ['latin'], variable: '--font-urbanist' });
+const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' });
 
 export const metadata: Metadata = {
   title: 'Gabhru in UK | Public Figure & Media Personality',
@@ -25,10 +23,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${playfair.variable}`}>
-      <body className="bg-background text-foreground font-sans antialiased overflow-x-hidden selection:bg-accent selection:text-background">
+    <html lang="en" className={`${instrumentSans.variable} ${urbanist.variable} ${playfair.variable}`}>
+      <body className="bg-cream text-walnut font-sans antialiased overflow-x-hidden selection:bg-saffron selection:text-white">
         <SmoothScroll>
-          <div className="bg-noise" />
           <CustomCursor />
           <Navbar />
           {children}

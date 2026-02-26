@@ -21,8 +21,8 @@ export default function CustomCursor() {
     const yToInner = gsap.quickTo(inner, "y", { duration: 0, ease: "none" });
 
     // Outer ring - follows with lerp (lag)
-    const xToOuter = gsap.quickTo(outer, "x", { duration: 0.8, ease: "power3.out" }); // Simulating lerp: 0.12 mapped to duration
-    const yToOuter = gsap.quickTo(outer, "y", { duration: 0.8, ease: "power3.out" });
+    const xToOuter = gsap.quickTo(outer, "x", { duration: 0.15, ease: "power3.out" }); 
+    const yToOuter = gsap.quickTo(outer, "y", { duration: 0.15, ease: "power3.out" });
 
     const handleMouseMove = (e: MouseEvent) => {
       xToInner(e.clientX);
@@ -34,21 +34,21 @@ export default function CustomCursor() {
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       
-      const isImg = target.tagName.toLowerCase() === "img";
+      const isImg = target.tagName.toLowerCase() === "img" || target.closest(".gallery-item");
       const isLink = target.closest("a, button, .magnetic-target");
 
       if (isImg) {
         setIsHoveringImage(true);
-        gsap.to(outer, { width: 64, height: 64, backgroundColor: "rgba(201, 168, 76, 0.9)", borderColor: "transparent", duration: 0.3 });
+        gsap.to(outer, { width: 64, height: 64, backgroundColor: "var(--cream)", borderColor: "transparent", duration: 0.3 });
         gsap.to(inner, { opacity: 0, duration: 0.2 });
       } else if (isLink) {
         setIsHoveringImage(false);
-        gsap.to(outer, { width: 56, height: 56, backgroundColor: "rgba(201, 168, 76, 0.2)", borderColor: "#C9A84C", duration: 0.3 });
+        gsap.to(outer, { width: 40, height: 40, backgroundColor: "transparent", borderColor: "var(--saffron)", duration: 0.3 });
         gsap.to(inner, { scale: 0, duration: 0.2 });
       } else {
         setIsHoveringImage(false);
-        gsap.to(outer, { width: 36, height: 36, backgroundColor: "transparent", borderColor: "#C9A84C", duration: 0.3 });
-        gsap.to(inner, { opacity: 1, scale: 1, duration: 0.2 });
+        gsap.to(outer, { width: 40, height: 40, backgroundColor: "transparent", borderColor: "var(--saffron)", duration: 0.3 });
+        gsap.to(inner, { opacity: 1, scale: 1, duration: 0.2, backgroundColor: "var(--cream)" });
       }
     };
 
@@ -65,17 +65,17 @@ export default function CustomCursor() {
     <>
       <div
         ref={outerRef}
-        className="fixed top-0 left-0 w-[36px] h-[36px] rounded-full border border-accent flex items-center justify-center pointer-events-none z-[9999] max-md:hidden -translate-x-1/2 -translate-y-1/2"
+        className="fixed top-0 left-0 w-[40px] h-[40px] rounded-full border border-saffron flex items-center justify-center pointer-events-none z-[9999] max-md:hidden -translate-x-1/2 -translate-y-1/2 mix-blend-difference"
       >
         {isHoveringImage && (
-          <span className="text-background text-[10px] font-bold tracking-widest uppercase">
+          <span className="text-espresso text-[10px] font-bold tracking-widest uppercase opacity-80">
             View
           </span>
         )}
       </div>
       <div
         ref={innerRef}
-        className="fixed top-0 left-0 w-[6px] h-[6px] rounded-full bg-accent pointer-events-none z-[9999] max-md:hidden -translate-x-1/2 -translate-y-1/2"
+        className="fixed top-0 left-0 w-[12px] h-[12px] rounded-full bg-cream pointer-events-none z-[9999] max-md:hidden -translate-x-1/2 -translate-y-1/2 mix-blend-difference"
       />
     </>
   );

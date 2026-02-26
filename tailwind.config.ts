@@ -9,74 +9,58 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: {
-          DEFAULT: "#0A0A0A",
-          secondary: "#111318",
-          card: "#16191F",
-        },
-        foreground: {
-          DEFAULT: "#F5F5F0",
-        },
-        accent: {
-          DEFAULT: "#C9A84C",
-          hover: "#E8C56A",
-          divider: "rgba(201, 168, 76, 0.2)",
-        },
+        cream: "var(--cream)",
+        espresso: "var(--espresso)",
+        saffron: "var(--saffron)",
+        forest: "var(--forest)",
+        walnut: "var(--walnut)",
+        sand: "var(--sand)",
+        white: "var(--white)",
+        background: "var(--cream)",
+        foreground: "var(--walnut)",
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "sans-serif"],
+        sans: ["var(--font-instrument)", "sans-serif"],
+        heading: ["var(--font-urbanist)", "sans-serif"],
         serif: ["var(--font-playfair)", "serif"],
       },
       fontSize: {
-        h1: ["clamp(42px, 6vw, 96px)", { lineHeight: "1.1", letterSpacing: "-0.02em" }],
-        h2: ["clamp(32px, 4vw, 48px)", { lineHeight: "1.2", letterSpacing: "-0.01em" }],
-        h3: ["28px", { lineHeight: "1.3" }],
-        body: ["17px", { lineHeight: "1.75" }],
-        caption: ["13px", { lineHeight: "1.5", letterSpacing: "0.08em" }],
+        h1: ["clamp(48px, 8vw, 120px)", { lineHeight: "1", letterSpacing: "-0.02em" }],
+        h2: ["clamp(36px, 5vw, 64px)", { lineHeight: "1.1", letterSpacing: "-0.01em" }],
+        h3: ["32px", { lineHeight: "1.2" }],
+        body: ["18px", { lineHeight: "1.6" }],
+        caption: ["14px", { lineHeight: "1.5", letterSpacing: "0.02em" }],
       },
       keyframes: {
-        grain: {
-          "0%, 100%": { transform: "translate(0, 0)" },
-          "10%": { transform: "translate(-5%, -10%)" },
-          "20%": { transform: "translate(-15%, 5%)" },
-          "30%": { transform: "translate(7%, -25%)" },
-          "40%": { transform: "translate(-5%, 25%)" },
-          "50%": { transform: "translate(-15%, 10%)" },
-          "60%": { transform: "translate(15%, 0%)" },
-          "70%": { transform: "translate(0%, 15%)" },
-          "80%": { transform: "translate(3%, 35%)" },
-          "90%": { transform: "translate(-10%, 10%)" },
-        },
         marquee: {
           "0%": { transform: "translate3d(0, 0, 0)" },
           "100%": { transform: "translate3d(-50%, 0, 0)" },
         }
       },
       animation: {
-        grain: "grain 8s steps(10) infinite",
         marquee: "marquee 30s linear infinite",
       },
       typography: (theme: any) => ({
         DEFAULT: {
           css: {
-            color: theme("colors.foreground.DEFAULT"),
+            color: theme("colors.walnut"),
             a: {
-              color: theme("colors.accent.DEFAULT"),
+              color: theme("colors.saffron"),
               "&:hover": {
-                color: theme("colors.accent.hover"),
+                color: theme("colors.espresso"),
               },
             },
-            h1: { fontFamily: theme("fontFamily.serif")[0], color: theme("colors.foreground.DEFAULT"), fontWeight: "400" },
-            h2: { fontFamily: theme("fontFamily.serif")[0], color: theme("colors.foreground.DEFAULT"), fontWeight: "400" },
-            h3: { fontFamily: theme("fontFamily.serif")[0], color: theme("colors.foreground.DEFAULT"), fontWeight: "400" },
-            h4: { fontFamily: theme("fontFamily.serif")[0], color: theme("colors.foreground.DEFAULT"), fontWeight: "400" },
+            h1: { fontFamily: theme("fontFamily.heading")[0], color: theme("colors.espresso"), fontWeight: "600" },
+            h2: { fontFamily: theme("fontFamily.heading")[0], color: theme("colors.espresso"), fontWeight: "600" },
+            h3: { fontFamily: theme("fontFamily.heading")[0], color: theme("colors.espresso"), fontWeight: "600" },
+            h4: { fontFamily: theme("fontFamily.heading")[0], color: theme("colors.espresso"), fontWeight: "600" },
             blockquote: {
-              borderLeftColor: theme("colors.accent.DEFAULT"),
+              borderLeftColor: theme("colors.saffron"),
               fontStyle: "italic",
               fontFamily: theme("fontFamily.serif")[0],
-              color: theme("colors.foreground.DEFAULT"),
+              color: theme("colors.espresso"),
             },
-            strong: { color: theme("colors.foreground.DEFAULT"), fontWeight: "600" },
+            strong: { color: theme("colors.espresso"), fontWeight: "600" },
           },
         },
       }),
