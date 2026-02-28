@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 :root {
-  --cream: #F5EFE6;
-  --espresso: #1C1008;
-  --saffron: #E87D2B;
-  --forest: #2C4A3E;
-  --walnut: #2D1F0E;
-  --sand: #C4A882;
-  --white: #FDFAF7;
+  --cream: #F8FAFC;
+  --espresso: #0F172A;
+  --saffron: #1D4ED8;
+  --forest: #1E293B;
+  --walnut: #334155;
+  --sand: #E2E8F0;
+  --white: #FFFFFF;
 }
 
 body {

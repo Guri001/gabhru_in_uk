@@ -149,7 +149,7 @@ export default function Hero() {
         className="absolute top-0 left-0 md:relative w-full md:w-[55%] h-[100svh] md:h-screen opacity-0"
       >
         <Image
-          src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=2000&auto=format&fit=crop"
+          src="/images/main.jpg"
           alt="Gabhru in UK - Public Figure"
           fill
           priority

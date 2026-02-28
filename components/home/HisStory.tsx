@@ -12,7 +12,7 @@ export default function HisStory() {
           <div className="w-full lg:w-1/2 relative">
             <div className="relative w-[90%] md:w-[85%] aspect-[4/5] mx-auto lg:mx-0 lg:-ml-8 z-10">
               <Image
-                src="https://images.unsplash.com/photo-1542261777448-23d2a287091c?q=80&w=1400&auto=format&fit=crop"
+                src="/images/founder.jpg"
                 alt="Gabhru in UK - Candid community moment"
                 fill
                 sizes="(max-width: 768px) 90vw, 40vw"
