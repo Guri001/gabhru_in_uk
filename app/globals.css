@@ -6,9 +6,8 @@
   --cream: #FAF9F6; /* A very soft, elegant off-white/cream */
   --espresso: #000000; /* Pure black text for maximum contrast against cream */
   --saffron: oklch(56.9% 0.2477 284.6);
-  --forest: #F8FAFC;
   --walnut: #334155;
-  --sand: #000000;
+  --black: #000000;
   --white: #FFFFFF;
 }
 

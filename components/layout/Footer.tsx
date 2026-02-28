@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { FaInstagram, FaYoutube, FaXTwitter, FaLinkedinIn } from "react-icons/fa6";
 import MagneticButton from "@/components/ui/MagneticButton";
 
@@ -34,9 +35,14 @@ export default function Footer() {
           {/* Left: Brand */}
           <div className="flex-1">
             <Link href="/" className="inline-block group magnetic-target mb-2 flex-col">
-              <span className="font-heading font-bold text-3xl md:text-4xl text-espresso group-hover:text-saffron transition-colors">
-                Gabhru <span className="text-saffron">in UK</span>
-              </span>
+              <div className="relative w-40 md:w-48 h-10 md:h-12">
+                <Image 
+                  src="/logo.svg" 
+                  alt="Gabhru in UK Logo"
+                  fill
+                  className="object-contain object-left"
+                />
+              </div>
             </Link>
             <p className="text-espresso/50 text-xs md:text-sm tracking-[0.2em] font-sans uppercase mt-2 max-w-xs">
               Public Figure | News & Media

@@ -15,7 +15,7 @@ if (typeof window !== "undefined") {
 const images = [
   { src: "/images/p1.jpg", desc: "Community Meetup in London" },
   { src: "/images/p2.jpg", desc: "Speaking on stage, Manchester" },
-  { src: "https://images.unsplash.com/photo-1528605248644-14dd04022da1?q=80&w=1200&auto=format&fit=crop", desc: "Behind the scenes podcast recording" },
+  { src: "https://images.unsplash.com/photo-1590602847861-f357a911B415?q=80&w=1200&auto=format&fit=crop", desc: "Behind the scenes podcast recording" },
   { src: "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?q=80&w=1200&auto=format&fit=crop", desc: "Mentorship session with students" },
   { src: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=1200&auto=format&fit=crop", desc: "Walking through London" },
   { src: "https://images.unsplash.com/photo-1523580494112-071dcebd709b?q=80&w=1200&auto=format&fit=crop", desc: "Q&A at the University panel" },

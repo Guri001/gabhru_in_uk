@@ -92,7 +92,7 @@ export default function OutInTheWorld() {
               </motion.div>
               <motion.div variants={itemVariants} className="w-full h-1/2 relative">
                 <MomentImage 
-                  src="https://images.unsplash.com/photo-1574343513337-17551ab9c5c7?q=80&w=1000&auto=format&fit=crop"
+                  src="https://images.unsplash.com/photo-1492724441997-5dc865305da7?auto=format&fit=crop&w=1200&q=80"
                   alt="Podcast Interview"
                   caption={{ name: "BBC Asian Network", date: "Sept 2024", location: "Media City" }}
                   containerClass="w-full h-full"

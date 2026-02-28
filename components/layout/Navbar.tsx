@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
@@ -40,10 +41,16 @@ export default function Navbar() {
         <div className="container mx-auto px-6 md:px-12 lg:px-20 flex items-center justify-between">
           
           {/* Logo */}
-          <Link href="/" className="group flex flex-col magnetic-target z-[9996]" onClick={() => setMobileMenuOpen(false)}>
-            <span className={`font-heading text-2xl tracking-tighter font-bold transition-colors ${mobileMenuOpen ? "text-white" : themeTextColor}`}>
-              Gabhru <span className="text-saffron">in UK</span>
-            </span>
+          <Link href="/" className="group flex flex-col magnetic-target z-[9996] hover:opacity-80 transition-opacity" onClick={() => setMobileMenuOpen(false)}>
+            <div className="relative w-40 md:w-48 h-10 md:h-12">
+              <Image 
+                src="/logo.svg" 
+                alt="Gabhru in UK Logo"
+                fill
+                className="object-contain object-left"
+                priority
+              />
+            </div>
           </Link>
 
           {/* Desktop Nav */}

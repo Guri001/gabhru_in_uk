@@ -28,7 +28,7 @@ const mediaItems = [
     type: "Podcast Appearance",
     title: "The Route to Indefinite Leave to Remain",
     date: "NOV 2025",
-    image: "https://images.unsplash.com/photo-1589903308904-1010c2294adc?auto=format&fit=crop&q=80&w=600"
+    image: "https://images.unsplash.com/photo-1475721028070-20412b590e66?auto=format&fit=crop&q=80&w=600"
   },
   {
     id: 4,
