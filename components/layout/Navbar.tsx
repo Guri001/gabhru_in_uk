@@ -9,7 +9,6 @@ import { Menu, X } from "lucide-react";
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isDarkBg, setIsDarkBg] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -17,38 +16,8 @@ export default function Navbar() {
       setScrolled(window.scrollY > 80);
     };
     window.addEventListener("scroll", handleScroll);
-
-    // Observer to detect dark sections under the navbar
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const el = entry.target as HTMLElement;
-            const isDark =
-              el.classList.contains("bg-espresso") ||
-              el.classList.contains("bg-forest") ||
-              el.classList.contains("bg-walnut");
-            setIsDarkBg(isDark);
-          }
-        });
-      },
-      { rootMargin: "-40px 0px -90% 0px" } // trigger when near the top of viewport
-    );
-
-    const setupObserver = () => {
-      const elements = document.querySelectorAll(
-        "section, main, footer, .bg-espresso, .bg-forest, .bg-walnut"
-      );
-      elements.forEach((el) => observer.observe(el));
-    };
-
-    setTimeout(setupObserver, 150);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      observer.disconnect();
-    };
-  }, [pathname]);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navLinks = [
     { name: "His Story", path: "/#about" },
@@ -56,27 +25,23 @@ export default function Navbar() {
     { name: "Articles", path: "/articles" },
   ];
 
-  const themeTextColor = isDarkBg ? "text-cream" : "text-espresso";
-  const themeButtonClass = isDarkBg
-    ? "bg-cream text-espresso hover:bg-saffron hover:text-cream"
-    : "bg-espresso text-cream hover:bg-saffron hover:text-espresso";
+  const themeTextColor = "text-espresso";
+  const themeButtonClass = "bg-saffron text-white hover:bg-espresso hover:text-white";
 
   return (
     <>
       <header
         className={`fixed top-0 left-0 w-full z-[9990] transition-all duration-400 border-b ${
-          scrolled && !isDarkBg
-            ? "bg-cream/80 backdrop-blur-md border-espresso/10 shadow-sm"
-            : scrolled && isDarkBg
-            ? "bg-espresso/50 backdrop-blur-md border-cream/10 shadow-sm"
-            : "bg-transparent border-transparent"
-        } ${scrolled ? "py-4" : "py-6 block"}`}
+          scrolled
+            ? "bg-white/80 backdrop-blur-md border-espresso/10 shadow-sm py-4"
+            : "bg-transparent border-transparent py-6 block"
+        }`}
       >
         <div className="container mx-auto px-6 md:px-12 lg:px-20 flex items-center justify-between">
           
           {/* Logo */}
           <Link href="/" className="group flex flex-col magnetic-target z-[9996]" onClick={() => setMobileMenuOpen(false)}>
-            <span className={`font-heading text-2xl tracking-tighter font-bold transition-colors ${mobileMenuOpen ? "text-cream" : themeTextColor + " group-hover:text-saffron"}`}>
+            <span className={`font-heading text-2xl tracking-tighter font-bold transition-colors ${mobileMenuOpen ? "text-white" : themeTextColor}`}>
               Gabhru <span className="text-saffron">in UK</span>
             </span>
           </Link>
@@ -110,7 +75,7 @@ export default function Navbar() {
 
           {/* Mobile Toggle */}
           <button
-            className={`md:hidden ${mobileMenuOpen ? "text-cream" : themeTextColor} hover:text-saffron transition-colors z-[9996] relative`}
+            className={`md:hidden ${mobileMenuOpen ? "text-white" : themeTextColor} hover:text-saffron transition-colors z-[9996] relative`}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? <X size={32} /> : <Menu size={32} />}
@@ -126,7 +91,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: "-100%" }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="fixed inset-0 z-[9995] bg-espresso flex flex-col justify-center items-center px-6"
+            className="fixed inset-0 z-[9995] bg-saffron flex flex-col justify-center items-center px-6"
           >
             <motion.div
               initial="closed"
@@ -148,7 +113,7 @@ export default function Navbar() {
                 >
                   <Link
                     href={link.path}
-                    className="font-heading text-4xl md:text-5xl font-bold text-cream hover:text-saffron transition-colors block tracking-tighter"
+                    className="font-heading text-4xl md:text-5xl font-bold text-white hover:text-espresso transition-colors block tracking-tighter"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {link.name}
@@ -164,7 +129,7 @@ export default function Navbar() {
               >
                 <Link
                   href="#contact"
-                  className="block w-full text-center px-8 py-5 text-sm font-bold bg-saffron text-espresso hover:bg-cream transition-colors uppercase tracking-widest"
+                  className="block w-full text-center px-8 py-5 text-sm font-bold bg-white text-saffron hover:bg-espresso hover:text-white transition-colors uppercase tracking-widest"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Let's Talk
@@ -173,7 +138,7 @@ export default function Navbar() {
             </motion.div>
             
             {/* Background Accent */}
-            <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-saffron/10 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-white/10 rounded-full blur-[100px] pointer-events-none" />
           </motion.div>
         )}
       </AnimatePresence>

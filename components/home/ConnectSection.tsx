@@ -5,13 +5,13 @@ import MagneticButton from "@/components/ui/MagneticButton";
 
 export default function ConnectSection() {
   return (
-    <section className="w-full bg-espresso text-cream py-32 md:py-48 flex flex-col items-center justify-center min-h-[80vh] relative overflow-hidden">
+    <section className="w-full bg-white text-espresso py-32 md:py-48 flex flex-col items-center justify-center min-h-[80vh] relative overflow-hidden">
       
       <div className="container mx-auto px-6 text-center z-10 flex flex-col items-center">
         
         {/* Large Heading */}
         <h2 className="font-heading text-5xl md:text-7xl lg:text-[7rem] leading-none mb-4 md:mb-6 tracking-tight font-bold">
-          <span className="block text-cream mb-2">Want to work together?</span>
+          <span className="block text-espresso mb-2">Want to work together?</span>
           <span className="block text-saffron italic">Let's talk.</span>
         </h2>
 
@@ -30,16 +30,16 @@ export default function ConnectSection() {
 
         {/* Social Icons */}
         <div className="flex gap-6 md:gap-8 justify-center items-center mb-16">
-          <a href="https://instagram.com" target="_blank" rel="noreferrer" className="text-cream/50 hover:text-saffron hover:scale-110 transition-all duration-300">
+          <a href="https://instagram.com" target="_blank" rel="noreferrer" className="text-espresso/50 hover:text-saffron hover:scale-110 transition-all duration-300">
             <FaInstagram size={32} />
           </a>
-          <a href="https://youtube.com" target="_blank" rel="noreferrer" className="text-cream/50 hover:text-saffron hover:scale-110 transition-all duration-300">
+          <a href="https://youtube.com" target="_blank" rel="noreferrer" className="text-espresso/50 hover:text-saffron hover:scale-110 transition-all duration-300">
             <FaYoutube size={32} />
           </a>
-          <a href="https://twitter.com" target="_blank" rel="noreferrer" className="text-cream/50 hover:text-saffron hover:scale-110 transition-all duration-300">
+          <a href="https://twitter.com" target="_blank" rel="noreferrer" className="text-espresso/50 hover:text-saffron hover:scale-110 transition-all duration-300">
             <FaXTwitter size={32} />
           </a>
-          <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="text-cream/50 hover:text-saffron hover:scale-110 transition-all duration-300">
+          <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="text-espresso/50 hover:text-saffron hover:scale-110 transition-all duration-300">
             <FaLinkedinIn size={32} />
           </a>
         </div>

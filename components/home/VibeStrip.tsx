@@ -19,7 +19,7 @@ export default function VibeStrip() {
   ];
 
   return (
-    <section className="w-full bg-espresso h-[80px] flex items-center overflow-hidden border-t border-cream/10 relative z-20">
+    <section className="w-full bg-white h-[80px] flex items-center overflow-hidden border-t border-espresso/10 relative z-20">
       <div className="flex whitespace-nowrap animate-marquee">
         {/* Render multiple sets to ensure seamless infinite scroll */}
         {[...Array(6)].map((_, i) => (

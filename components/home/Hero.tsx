@@ -73,14 +73,14 @@ export default function Hero() {
   }, { scope: containerRef });
 
   return (
-    <section ref={containerRef} className="relative w-full min-h-[100svh] flex flex-col-reverse md:flex-row bg-espresso overflow-hidden">
+    <section ref={containerRef} className="relative w-full min-h-[100svh] flex flex-col-reverse md:flex-row bg-white overflow-hidden">
       
       {/* LEFT: 45% Content (Dark Espresso Background) */}
-      <div className="relative w-full md:w-[45%] flex flex-col justify-center px-8 md:px-12 lg:px-20 py-16 z-10 bg-espresso/85 md:bg-espresso text-cream min-h-[60vh] md:min-h-screen">
+      <div className="relative w-full md:w-[45%] flex flex-col justify-center px-8 md:px-12 lg:px-20 py-16 z-10 bg-white/85 md:bg-white text-espresso min-h-[60vh] md:min-h-screen">
         
         {/* Title */}
         <div className="mb-6 relative">
-          <h1 className="font-heading text-6xl md:text-7xl lg:text-[6rem] leading-[1.05] tracking-tight font-bold text-cream">
+          <h1 className="font-heading text-6xl md:text-7xl lg:text-[6rem] leading-[1.05] tracking-tight font-bold text-espresso">
             <div className="overflow-hidden pb-2"><span className="name-word inline-block">Gabhru</span></div>
             <div className="overflow-hidden pb-2 flex items-center">
               <span className="name-word inline-block">in UK</span>
@@ -103,7 +103,7 @@ export default function Hero() {
         {/* Punchy Line */}
         <p 
           ref={missionRef}
-          className="text-cream/90 text-xl md:text-2xl font-sans mb-12 max-w-sm opacity-0"
+          className="text-espresso/90 text-xl md:text-2xl font-sans mb-12 max-w-sm opacity-0"
         >
           Real stories. Real community. Real UK.
         </p>
@@ -113,7 +113,7 @@ export default function Hero() {
           <a href="#about" className="hero-cta inline-flex items-center justify-center bg-saffron text-espresso px-8 py-4 font-bold uppercase tracking-wider text-sm hover:bg-white transition-colors duration-300">
             Explore His World
           </a>
-          <a href="#media" className="hero-cta inline-flex items-center justify-center border border-cream/30 text-cream px-8 py-4 font-bold uppercase tracking-wider text-sm hover:border-saffron hover:text-saffron transition-colors duration-300">
+          <a href="#media" className="hero-cta inline-flex items-center justify-center border border-espresso/30 text-espresso px-8 py-4 font-bold uppercase tracking-wider text-sm hover:border-saffron hover:text-saffron transition-colors duration-300">
             Watch & Listen
           </a>
         </div>
@@ -121,22 +121,22 @@ export default function Hero() {
         {/* Socials */}
         <div ref={socialsRef} className="flex items-center gap-6 mt-auto">
           <MagneticButton>
-            <a href="https://instagram.com" target="_blank" rel="noreferrer" className="hero-social text-cream/60 hover:text-saffron transition-colors">
+            <a href="https://instagram.com" target="_blank" rel="noreferrer" className="hero-social text-espresso/60 hover:text-saffron transition-colors">
               <FaInstagram size={24} />
             </a>
           </MagneticButton>
           <MagneticButton>
-            <a href="https://youtube.com" target="_blank" rel="noreferrer" className="hero-social text-cream/60 hover:text-saffron transition-colors">
+            <a href="https://youtube.com" target="_blank" rel="noreferrer" className="hero-social text-espresso/60 hover:text-saffron transition-colors">
               <FaYoutube size={24} />
             </a>
           </MagneticButton>
           <MagneticButton>
-            <a href="https://twitter.com" target="_blank" rel="noreferrer" className="hero-social text-cream/60 hover:text-saffron transition-colors">
+            <a href="https://twitter.com" target="_blank" rel="noreferrer" className="hero-social text-espresso/60 hover:text-saffron transition-colors">
               <FaXTwitter size={24} />
             </a>
           </MagneticButton>
           <MagneticButton>
-            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="hero-social text-cream/60 hover:text-saffron transition-colors">
+            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="hero-social text-espresso/60 hover:text-saffron transition-colors">
               <FaLinkedinIn size={24} />
             </a>
           </MagneticButton>
@@ -157,11 +157,11 @@ export default function Hero() {
           className="object-cover object-center"
         />
         {/* Warm overlay espresso color at 40% opacity */}
-        <div className="absolute inset-0 bg-espresso/40" />
+        <div className="absolute inset-0 bg-white/10" />
         {/* Slight warm grain texture overlay */}
         <div className="absolute inset-0 bg-noise opacity-30 mix-blend-overlay" />
         {/* Gradient for mobile overlap */}
-        <div className="absolute inset-0 bg-gradient-to-t from-espresso via-espresso/50 to-transparent md:hidden" />
+        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent md:hidden" />
       </div>
 
     </section>

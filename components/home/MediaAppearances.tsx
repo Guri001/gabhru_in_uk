@@ -9,7 +9,7 @@ export default function MediaAppearances() {
   ];
 
   return (
-    <section id="media" className="w-full bg-forest text-cream py-24 md:py-32 overflow-hidden relative">
+    <section id="media" className="w-full bg-white text-espresso py-24 md:py-32 overflow-hidden relative">
       <div className="container mx-auto px-6 mb-16">
         <h2 className="font-heading text-3xl md:text-5xl font-bold tracking-tight text-center md:text-left text-cream/80">
           They Know Him Too
@@ -17,7 +17,7 @@ export default function MediaAppearances() {
       </div>
 
       {/* Marquee Row */}
-      <div className="w-full flex items-center border-y border-white/10 h-32 relative overflow-hidden bg-forest">
+      <div className="w-full flex items-center border-y border-espresso/10 h-32 relative overflow-hidden bg-white">
         <div className="flex whitespace-nowrap animate-marquee">
           {[...Array(6)].map((_, i) => (
             <div key={i} className="flex items-center space-x-16 px-8">

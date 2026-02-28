@@ -90,7 +90,7 @@ export default function ArticleClient({ title, url }: { title: string; url: stri
               className="relative flex items-center justify-center w-10 h-10 rounded-full bg-sand/10 text-espresso hover:bg-saffron hover:text-white transition-colors border border-sand/20 shadow-sm hover:shadow-md group/copy"
             >
               <Link2 size={14} />
-              <span className="absolute left-14 bg-espresso border border-sand/20 text-cream text-[10px] uppercase px-3 py-1.5 opacity-0 group-hover/copy:opacity-100 transition-opacity pointer-events-none w-max shadow-md rounded-sm">
+              <span className="absolute left-14 bg-white border border-espresso/20 text-espresso text-[10px] uppercase px-3 py-1.5 opacity-0 group-hover/copy:opacity-100 transition-opacity pointer-events-none w-max shadow-md rounded-sm">
                 {copied ? "Copied!" : "Copy Link"}
               </span>
             </motion.button>
@@ -133,7 +133,7 @@ export default function ArticleClient({ title, url }: { title: string; url: stri
           className="relative flex items-center justify-center w-12 h-12 rounded-full border border-sand/40 hover:border-saffron hover:bg-saffron hover:text-white transition-colors shadow-sm"
         >
           <Link2 size={16} />
-          <span className="absolute bottom-14 bg-espresso border border-sand/20 text-cream text-[10px] uppercase px-3 py-1.5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none w-max shadow-lg rounded-sm">
+          <span className="absolute bottom-14 bg-white border border-espresso/20 text-espresso text-[10px] uppercase px-3 py-1.5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none w-max shadow-lg rounded-sm">
             {copied ? "Copied!" : "Copy !"}
           </span>
         </motion.button>

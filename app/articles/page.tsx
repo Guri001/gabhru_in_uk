@@ -25,15 +25,15 @@ export default async function ArticlesPage() {
     <main className="min-h-screen bg-cream">
       
       {/* Dark Espresso Hero */}
-      <section className="w-full bg-espresso text-cream pt-40 pb-20 px-6">
+      <section className="w-full bg-white text-espresso pt-40 pb-20 px-6">
         <div className="container mx-auto max-w-7xl">
-          <header className="flex flex-col md:flex-row md:items-end justify-between gap-12 border-b border-cream/10 pb-16">
+          <header className="flex flex-col md:flex-row md:items-end justify-between gap-12 border-b border-espresso/10 pb-16">
             <div className="max-w-3xl">
               <h1 className="text-5xl md:text-6xl lg:text-[6rem] font-heading font-bold leading-[0.9] mb-8 tracking-tight">
-                <span className="text-cream block mb-3">Insights &</span> 
+                <span className="text-espresso block mb-3">Insights &</span> 
                 <span className="text-saffron block italic">Perspectives</span>
               </h1>
-              <p className="text-cream/80 text-lg md:text-xl font-sans max-w-xl">
+              <p className="text-espresso/80 text-lg md:text-xl font-sans max-w-xl">
                 Analysis, personal reflections, and practical guides on navigating settlement and building a life in the UK.
               </p>
             </div>
@@ -49,7 +49,7 @@ export default async function ArticlesPage() {
                 />
               </div>
               <div className="flex flex-col justify-center">
-                <span className="text-cream font-sans font-bold text-sm tracking-widest uppercase mb-1">By Gabhru in UK</span>
+                <span className="text-espresso font-sans font-bold text-sm tracking-widest uppercase mb-1">By Gabhru in UK</span>
                 <span className="text-saffron text-[10px] uppercase tracking-[0.2em] font-bold">Author & Editor</span>
               </div>
             </div>

@@ -51,7 +51,7 @@ export default function ImpactNumbers() {
   }, { scope: sectionRef });
 
   return (
-    <section ref={sectionRef} className="w-full bg-espresso text-cream py-24 md:py-32 lg:py-40 flex items-center min-h-[50vh] xl:min-h-[70vh]">
+    <section ref={sectionRef} className="w-full bg-white text-espresso py-24 md:py-32 lg:py-40 flex items-center min-h-[50vh] xl:min-h-[70vh]">
       <div className="container mx-auto px-6 impact-content">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8 text-center max-w-5xl mx-auto">
           

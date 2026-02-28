@@ -73,7 +73,7 @@ export default function OutInTheWorld() {
             {/* Big Left Image */}
             <motion.div variants={itemVariants} className="w-full lg:w-[60%] h-[50vh] lg:h-full relative shrink-0">
               <MomentImage 
-                src="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2000&auto=format&fit=crop"
+                src="/images/p1.jpg"
                 alt="Speaking at community event"
                 caption={{ name: "South Asian Heritage Month", date: "July 2025", location: "London" }}
                 containerClass="w-full h-full"
@@ -111,7 +111,7 @@ export default function OutInTheWorld() {
               {/* Saffron offset border */}
               <div className="absolute -inset-y-6 -inset-x-4 md:-inset-8 border border-saffron z-0 translate-x-4 -translate-y-4 md:translate-x-8 md:-translate-y-8" />
               <MomentImage 
-                src="https://images.unsplash.com/photo-1523580494112-071dcebd709b?q=80&w=2000&auto=format&fit=crop"
+                src="/images/p2.jpg"
                 alt="Graduation guidance session"
                 caption={{ name: "Student Guidance Panel", date: "January 2025", location: "Manchester" }}
                 containerClass="w-full h-full z-10"
